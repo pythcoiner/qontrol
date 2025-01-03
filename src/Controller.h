@@ -30,7 +30,7 @@ public:
     void updateState(Json state);
 
     virtual void start(MainWindow *window);
-    virtual inline void loadPanels();
+    virtual void loadPanels();
 
 signals:
     void update(SharedJson state);
