@@ -1,10 +1,10 @@
 #pragma once
 
 #include <Panel.h>
+#include <QMainWindow>
 #include <QObject>
 #include <QWidget>
 
-class MainWindow;
 
 class Controller : public QObject {
     Q_OBJECT
@@ -14,7 +14,8 @@ public:
     auto operator=(const Controller&) -> Controller& = delete;
     ~Controller() override;
 
-    static void init();
+    static void init(Controller *controller);
+    static auto isInit() -> bool;
     static auto get() -> Controller*;
     static auto window() -> QWidget*;
 
@@ -29,7 +30,7 @@ public:
     void insertPanel(Panel *panel);
     void updateState(Json state);
 
-    virtual void start(MainWindow *window);
+    virtual void start(QMainWindow *window);
     virtual void loadPanels();
 
 signals:
@@ -46,7 +47,7 @@ private:
 
     QPointer<Panel> m_current_panel;
     QHash<QString, Panel*> m_panels;
-    MainWindow* m_window;
+    QMainWindow* m_window;
     QHash<QString, QList<QPair<QString, QString>>> m_enums;
     inline static Controller *s_instance = nullptr ; //NOLINT(readability-identifier-naming)
 };

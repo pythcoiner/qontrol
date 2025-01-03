@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include "MainWindow.h"
 #include "Screen.h"
 #include "common.h"
 #include <QtWebSockets/qwebsocket.h>
@@ -22,12 +21,17 @@ Controller::Controller() :
     m_window(nullptr)
 {}
 
-void Controller::init() {
+void Controller::init(Controller *controller) {
     if (s_instance != nullptr) {
         qFatal() << "Controller have already been initiated!";
     }
-    s_instance = new Controller();
+    s_instance = controller;
 }
+
+auto Controller::isInit() -> bool {
+    return s_instance != nullptr;
+}
+
 auto Controller::get() -> Controller* {
     if (s_instance == nullptr) {
         qFatal() << "Controller have not been initiated!";
@@ -41,10 +45,10 @@ Controller::~Controller() = default;
 
 void Controller::loadPanel(const QString &name) {
     qDebug() << "loadPanel(" << name <<")";
-    if (m_panels.size() < 1) this->loadPanels();
     auto *panel = m_panels.value(name);
 
-    if (panel == nullptr) qFatal() << "Controller::loadPanel(): Panel with name " << name << " does not exists!";
+    if (panel == nullptr) qFatal() << "Controller::loadPanel(): Panel with name " 
+        << name << " does not exists!";
     if (m_current_panel != nullptr) {
         // setCentralWidget() delete the replaced widget, so we had to take it first
         auto *previousScreen = dynamic_cast<Screen*>(m_window->takeCentralWidget());
@@ -82,7 +86,6 @@ auto jsonFromString(const QString &msg) -> Json {
 }
 
 void Controller::onClose() {
-    connect(this, &Controller::closed, m_window, &MainWindow::onClose);
     emit this->closed();
 }
 
@@ -94,9 +97,8 @@ auto Controller::getWindow() -> QWidget* {
     return m_window;
 }
 
-void Controller::start(MainWindow *window) {
+void Controller::start(QMainWindow *window) {
     m_window = window;
-    connect(m_window, &MainWindow::askClose, this, &Controller::onClose);
 }
 
 auto Controller::getEnum(const QString &name) -> std::optional<QList<QPair<QString, QString>>> {

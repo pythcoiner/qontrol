@@ -3,7 +3,6 @@
 #include "src/widgets/Collapsible.h" // IWYU pragma: keep
 #include "src/Column.h" // IWYU pragma: keep
 #include "src/Controller.h" // IWYU pragma: keep
-#include "src/MainWindow.h" // IWYU pragma: keep
 #include "src/Panel.h" // IWYU pragma: keep
 #include "src/Row.h" // IWYU pragma: keep
 #include "src/Screen.h" // IWYU pragma: keep

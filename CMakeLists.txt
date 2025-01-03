@@ -12,7 +12,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(SOURCES
-    src/MainWindow.cpp
     src/Controller.cpp
     src/widgets/Collapsible.cpp
     src/widgets/Slider.cpp
