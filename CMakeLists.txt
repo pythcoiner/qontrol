@@ -30,6 +30,7 @@ set(SOURCES
 qt6_add_library(${LIB_QONTROL} STATIC ${SOURCES})
 
 target_include_directories(${LIB_QONTROL} PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
