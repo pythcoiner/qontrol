@@ -20,7 +20,6 @@ public:
 
     auto getWindow() -> QWidget*;
 
-    inline void loadPanels();
 
     auto getEnum(const QString &name) -> std::optional<QList<QPair<QString, QString>>>;
     auto enumExists(const QString &name) -> bool;
@@ -29,7 +28,9 @@ public:
     void loadPanel(const QString &name);
     void insertPanel(Panel *panel);
     void updateState(Json state);
-    void start(MainWindow *window);
+
+    virtual void start(MainWindow *window);
+    virtual inline void loadPanels();
 
 signals:
     void update(SharedJson state);
