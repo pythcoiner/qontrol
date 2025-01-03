@@ -22,6 +22,8 @@ auto Input::value() const -> QJsonValue {
         case InputType::String:
             return this->stringValue();
     }
+    qFatal() << "Input::value(): switch unhandled case";
+    return QJsonValue();
 }
 
 void Input::onUpdate() {
