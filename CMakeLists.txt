@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Core Test)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Core)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -34,7 +34,7 @@ target_include_directories(${LIB_QONTROL} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
-target_link_libraries(${LIB_QONTROL} PRIVATE Qt6::Gui Qt6::Core Qt6::Widgets Qt::Test)
+target_link_libraries(${LIB_QONTROL} PRIVATE Qt6::Gui Qt6::Core Qt6::Widgets)
 
 set_target_properties(${LIB_QONTROL_QONTROL} PROPERTIES
     WIN32_EXECUTABLE ON
