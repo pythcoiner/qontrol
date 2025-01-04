@@ -2,17 +2,18 @@
 
 #include <QJsonObject>
 
-const int LEFT_MARGIN = 30;
-const int RIGHT_MARGIN = 30;
-const int TOP_MARGIN = 30;
-const int BOTTOM_MARGIN = 30;
+const int QONTROL_MARGIN =30;
+const int QONTROL_LEFT_MARGIN = QONTROL_MARGIN;
+const int QONTROL_RIGHT_MARGIN = QONTROL_MARGIN;
+const int QONTROL_TOP_MARGIN = QONTROL_MARGIN;
+const int QONTROL_BOTTOM_MARGIN = QONTROL_MARGIN;
 
-const int LABEL_WIDTH = 120;
-const int INPUT_WIDTH = 200;
-const int UNIT_WIDTH = 30;
+const int QONTROL_LABEL_WIDTH = 120;
+const int QONTROL_INPUT_WIDTH = 200;
+const int QONTROL_UNIT_WIDTH = 30;
 
-const int V_SPACER = 10;
-const int H_SPACER = 5;
+const int QONTROL_V_SPACER = 10;
+const int QONTROL_H_SPACER = 5;
 
 using Json = std::unique_ptr<QJsonObject>;
 using SharedJson = std::shared_ptr<const QJsonObject>;

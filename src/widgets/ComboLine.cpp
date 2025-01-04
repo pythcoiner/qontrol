@@ -10,14 +10,14 @@ ComboLine::ComboLine(const QString &name) {
 
 auto ComboLine::label(const QString &label) -> ComboLine* {
     m_label = new QLabel(label, this);
-    m_label->setFixedWidth(LABEL_WIDTH);
+    m_label->setFixedWidth(QONTROL_LABEL_WIDTH);
     this->update();
     return this;
 }
 
 auto ComboLine::combo(const QString &enum_name) -> ComboLine* {
     m_combo = new ComboBox(enum_name, this);
-    m_combo->setFixedWidth(INPUT_WIDTH);
+    m_combo->setFixedWidth(QONTROL_INPUT_WIDTH);
     this->update();
     return this;
 }
@@ -25,28 +25,28 @@ auto ComboLine::combo(const QString &enum_name) -> ComboLine* {
 auto ComboLine::comboWidth(float factor) -> ComboLine* {
     if (m_combo != nullptr) {
         auto f = (int)(factor*1000);
-        m_combo->setFixedWidth(INPUT_WIDTH * f / 1000);
+        m_combo->setFixedWidth(QONTROL_INPUT_WIDTH * f / 1000);
     }
     return this;
 }
 
 auto ComboLine::unit(const QString &label) -> ComboLine* {
     m_unit = new QLabel(label, this);
-    m_unit->setFixedWidth(UNIT_WIDTH);
+    m_unit->setFixedWidth(QONTROL_UNIT_WIDTH);
     this->update();
     return this;
 }
 
 void ComboLine::update() {
     this->clear();
-    this->pushSpacer(LEFT_MARGIN);
+    this->pushSpacer(QONTROL_LEFT_MARGIN);
     if (m_label != nullptr) {
         this->push(m_label)
-            ->pushSpacer(H_SPACER);
+            ->pushSpacer(QONTROL_H_SPACER);
     }
     if (m_combo != nullptr) {
         this->push(m_combo)
-            ->pushSpacer(H_SPACER);
+            ->pushSpacer(QONTROL_H_SPACER);
     }
     if (m_unit != nullptr) {
         this->push(m_unit);
