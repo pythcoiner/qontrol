@@ -51,7 +51,7 @@ void Controller::loadPanel(const QString &name) {
         << name << " does not exists!";
     if (m_current_panel != nullptr) {
         // setCentralWidget() delete the replaced widget, so we had to take it first
-        auto *previousScreen = dynamic_cast<Screen*>(m_window->takeCentralWidget());
+        auto *previousScreen = dynamic_cast<Screen*>(m_window->takePanel());
         if (previousScreen != nullptr) {
             m_current_panel->setScreen(previousScreen);
         }
@@ -59,7 +59,7 @@ void Controller::loadPanel(const QString &name) {
     }
     m_current_panel = panel;
     m_current_panel->connectScreen();
-    m_window->setCentralWidget(m_current_panel->widget());
+    m_window->loadPanel(m_current_panel->widget());
     m_current_panel->widget()->setVisible(true);
 }
 
@@ -97,7 +97,7 @@ auto Controller::getWindow() -> QWidget* {
     return m_window;
 }
 
-void Controller::start(QMainWindow *window) {
+void Controller::start(Window *window) {
     m_window = window;
 }
 

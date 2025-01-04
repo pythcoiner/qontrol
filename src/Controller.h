@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
+#include "Window.h"
 
 
 class Controller : public QObject {
@@ -30,7 +31,7 @@ public:
     void insertPanel(Panel *panel);
     void updateState(Json state);
 
-    virtual void start(QMainWindow *window);
+    virtual void start(Window *window);
     virtual void loadPanels();
 
 signals:
@@ -47,7 +48,7 @@ private:
 
     QPointer<Panel> m_current_panel;
     QHash<QString, Panel*> m_panels;
-    QMainWindow* m_window;
+    Window* m_window;
     QHash<QString, QList<QPair<QString, QString>>> m_enums;
     inline static Controller *s_instance = nullptr ; //NOLINT(readability-identifier-naming)
 };

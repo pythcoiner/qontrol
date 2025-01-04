@@ -13,6 +13,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(SOURCES
     src/Controller.cpp
+    src/Window.cpp
     src/widgets/Collapsible.cpp
     src/widgets/Slider.cpp
     src/widgets/ToggleSwitch.cpp
