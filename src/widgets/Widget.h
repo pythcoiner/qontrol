@@ -14,7 +14,9 @@
 class Widget {
 
 public:
-    [[nodiscard]] virtual auto hasValue() const -> bool = 0;
+    [[nodiscard]] virtual auto hasValue() const -> bool {
+        return false;
+    }
     [[nodiscard]] virtual auto isIterable() const -> bool {
         return !m_widgets.isEmpty();
     };
