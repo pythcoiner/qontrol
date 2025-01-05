@@ -21,6 +21,7 @@ public:
     static auto window() -> QWidget*;
 
     auto getWindow() -> QWidget*;
+    auto screen(const QString &screen) -> std::optional<Screen*>;
 
 
     auto getEnum(const QString &name) -> std::optional<QList<QPair<QString, QString>>>;

@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "common.h"
 #include <QtWebSockets/qwebsocket.h>
+#include <optional>
 #include <qassert.h>
 #include <qjsonarray.h>
 #include <qjsondocument.h>
@@ -37,6 +38,14 @@ auto Controller::get() -> Controller* {
         qFatal() << "Controller have not been initiated!";
     }
     return s_instance;
+}
+
+auto Controller::screen(const QString &screen) -> std::optional<Screen*> {
+    auto *panel = m_panels.value(screen);
+    if (panel != nullptr) {
+        return std::optional(panel->screen());
+    }
+    return std::nullopt;
 }
 
 void Controller::loadPanels() {}
