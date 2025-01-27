@@ -1,15 +1,13 @@
 #include "Collapsible.h"
+#include "../../resources/icons/icons.h"
 #include "../Column.h"
 #include <qlist.h>
 #include <qpushbutton.h>
 
 namespace qontrol::widgets {
 
-const QString PLUS = ":/icons/plus.png";
-const QString MINUS = ":/icons/minus.png";
-
 Collapsible::Collapsible(const QString &name, QWidget *parent) : Column(parent), m_title(name) {
-    m_bar = new QPushButton(QIcon(PLUS),m_title);
+    m_bar = new QPushButton(QIcon(PLUS()),m_title);
     m_bar->setStyleSheet("text-align: left; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;");
     m_bar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_column = new Column();
@@ -37,10 +35,10 @@ void Collapsible::onClicked() {
 void Collapsible::setCollapsed(bool collapsed) {
     m_collapsed = collapsed;
     if (!collapsed) {
-        m_bar->setIcon(QIcon(PLUS));
+        m_bar->setIcon(QIcon(PLUS()));
         m_column->setVisible(false);
     } else {
-        m_bar->setIcon(QIcon(MINUS));
+        m_bar->setIcon(QIcon(MINUS()));
         m_column->setVisible(true);
     }
 }
