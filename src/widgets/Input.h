@@ -7,6 +7,8 @@
 #include <qjsonvalue.h>
 #include <qobject.h>
 
+namespace qontrol::widgets {
+
 enum class InputType : uint8_t {
     String,
     Int,
@@ -45,3 +47,4 @@ private:
   InputType m_type;
 };
 
+} // namespace qontrol::widgets

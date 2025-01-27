@@ -7,6 +7,8 @@
 #include <qjsonvalue.h>
 #include <qobject.h>
 
+namespace qontrol::widgets {
+
 class ComboBox : public QComboBox, Widget {
   Q_OBJECT
 
@@ -33,3 +35,4 @@ private:
   QList<QPair<QString, QString>> *m_values;
 };
 
+} // namespace qontrol::widgets

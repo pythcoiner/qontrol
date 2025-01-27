@@ -9,6 +9,8 @@
 #include <qjsonvalue.h>
 #include <qsize.h>
 
+namespace qontrol::widgets {
+
 class ToggleSwitch : public QCheckBox, Widget
 {
 Q_OBJECT
@@ -53,3 +55,4 @@ inline void ToggleSwitch::setBrush(const QBrush &brush)
     this->m_head_brush = brush;
 }
 
+} // namespace qontrol::widgets

@@ -7,6 +7,8 @@
 #include <qjsonvalue.h>
 #include <qlist.h>
 
+namespace qontrol::widgets {
+
 ComboBox::ComboBox( const QString &enum_name ,QWidget *parent) : 
     QComboBox(parent), 
     m_enum_name(enum_name)
@@ -67,3 +69,5 @@ void ComboBox::loadValue(const QJsonValue &value, int depth) {
         qCritical() << "ComboBox::loadValue() value is not of type String";
     }
 }
+
+} // namespace qontrol::widgets

@@ -1,8 +1,12 @@
+#pragma once
+
 #include "../Row.h"
 #include "Input.h"
 #include "Widget.h"
 #include <qlabel.h>
 #include <qvalidator.h>
+
+namespace qontrol::widgets {
 
 class InputLine: public Row, public Widget {
     Q_OBJECT
@@ -34,3 +38,5 @@ private:
     QLabel *m_unit = nullptr;
     bool m_no_fill = false;
 };
+
+} // namespace qontrol::widgets

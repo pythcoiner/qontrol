@@ -18,6 +18,8 @@
 #include <qslider.h>
 #include <qwidget.h>
 
+namespace qontrol::widgets {
+
 SliderHeader::SliderHeader(Slider *parent) : QWidget(parent) {
     m_pen = new QPen(Qt::white);
     m_parent = parent;
@@ -382,3 +384,4 @@ auto Slider::slider() -> QSlider* {
     return m_slider;
 }
 
+} // namespace qontrol::widgets

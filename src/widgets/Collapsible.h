@@ -6,6 +6,8 @@
 #include <qobject.h>
 #include <qpushbutton.h>
 
+namespace qontrol::widgets {
+
 class Collapsible : public Column {
     Q_OBJECT
 
@@ -26,4 +28,6 @@ private:
     QList<QWidget*> *m_items = nullptr;
     bool m_collapsed = true;
 };
+
+} // namespace qontrol::widgets
 

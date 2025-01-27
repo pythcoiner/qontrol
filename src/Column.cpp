@@ -1,5 +1,7 @@
 #include "Column.h"
 
+namespace qontrol {
+
 Column::Column(QWidget *parent) : QWidget(parent) {
     auto *layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
@@ -72,3 +74,5 @@ void Column::clear() {
     delete this->layout();
     QWidget::setLayout(layout);
 }
+
+} // namespace qontrol

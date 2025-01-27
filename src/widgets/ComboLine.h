@@ -1,7 +1,11 @@
+#pragma once
+
 #include "ComboBox.h"
 #include "../Row.h"
 #include "Widget.h"
 #include <qlabel.h>
+
+namespace qontrol::widgets {
 
 class ComboLine: public Row, public Widget {
     Q_OBJECT
@@ -30,3 +34,5 @@ private:
     bool m_no_fill = false;
 
 };
+
+} // namespace qontrol::widgets

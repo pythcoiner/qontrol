@@ -11,6 +11,8 @@
 #include <qlogging.h>
 #include <qnamespace.h>
 
+namespace qontrol {
+
 class Row : public QWidget {
     Q_OBJECT
 
@@ -32,3 +34,5 @@ public:
 private:
 
 };
+
+} // namespace qontrol

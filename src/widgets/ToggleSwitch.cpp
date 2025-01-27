@@ -1,6 +1,8 @@
 #include "ToggleSwitch.h"
 #include <qlogging.h>
 
+namespace qontrol::widgets {
+
 ToggleSwitch::ToggleSwitch(QWidget *parent) :
     QCheckBox(parent),
     m_margin(3),
@@ -107,4 +109,4 @@ auto ToggleSwitch::value() const  -> QJsonValue {
     return QJsonValue::Null;
 }
 
-
+} // namespace qontrol::widgets

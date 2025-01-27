@@ -4,6 +4,8 @@
 #include <qlogging.h>
 #include <qwidget.h>
 
+namespace qontrol::widgets {
+
 ComboLine::ComboLine(const QString &name) {
     this->setKey(name);
 }
@@ -102,3 +104,6 @@ void ComboLine::loadValue(const QJsonValue &value, int depth) {
         m_combo->loadValue(value);
     }
 }
+
+} // namespace qontrol::widgets
+

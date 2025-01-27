@@ -1,6 +1,8 @@
 #include "Row.h"
 #include <qwidget.h>
 
+namespace qontrol {
+
 Row::Row(QWidget *parent) : QWidget(parent) {
     auto *layout = new QHBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
@@ -76,3 +78,5 @@ void Row::clear() {
     delete this->layout();
     QWidget::setLayout(layout);
 }
+
+} // namespace qontrol

@@ -5,6 +5,8 @@
 #include <qlogging.h>
 #include <qnamespace.h>
 
+namespace qontrol {
+
 Panel::Panel(Screen *widget, const char *name) {
     if (widget == nullptr) {
         qFatal() << "Panel::Panel(widget): widget should not be a nullptr!";
@@ -48,3 +50,5 @@ void Panel::connectScreen() {
 auto Panel::screen() -> Screen* {
     return this->m_screen;
 }
+
+} // namespace qontrol

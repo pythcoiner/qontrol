@@ -17,6 +17,8 @@
 #include <qtmetamacros.h>
 #include <qwidget.h>
 
+namespace qontrol::widgets {
+
 class Slider;
 
 class SliderHeader : public QWidget {
@@ -99,3 +101,4 @@ private:
 
 };
 
+} // namespace qontrol::widgets

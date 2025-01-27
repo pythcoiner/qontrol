@@ -6,6 +6,7 @@
 #include <QWidget>
 #include "Window.h"
 
+namespace qontrol {
 
 class Controller : public QObject {
     Q_OBJECT
@@ -53,3 +54,5 @@ private:
     QHash<QString, QList<QPair<QString, QString>>> m_enums;
     inline static Controller *s_instance = nullptr ; //NOLINT(readability-identifier-naming)
 };
+
+} // namespace qontrol

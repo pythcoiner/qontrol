@@ -7,6 +7,8 @@
 #include <qjsonobject.h>
 #include <qobject.h>
 
+namespace qontrol {
+
 class Controller;
 
 class Panel : public QObject {
@@ -26,3 +28,5 @@ private:
     QPointer<Screen> m_screen;
     const char* m_name;
 };
+
+} // namespace qontrol

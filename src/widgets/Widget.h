@@ -11,6 +11,8 @@
 #include <qlogging.h>
 #include <qobject.h>
 
+namespace qontrol::widgets {
+
 class Widget {
 
 public:
@@ -128,3 +130,5 @@ private:
     QHash<QString, Widget*> m_widgets;
 };
 
+
+} // namespace qontrol::widgets

@@ -2,6 +2,8 @@
 
 #include <QJsonObject>
 
+namespace qontrol {
+
 const int QONTROL_MARGIN =30;
 const int QONTROL_LEFT_MARGIN = QONTROL_MARGIN;
 const int QONTROL_RIGHT_MARGIN = QONTROL_MARGIN;
@@ -39,3 +41,5 @@ inline auto newJson(Json ptr) -> SharedJson {
 };
 
 const Qt::ConnectionType UNIQUE = Qt::ConnectionType::UniqueConnection;
+
+} // namespace qontrol

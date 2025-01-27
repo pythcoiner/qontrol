@@ -11,6 +11,8 @@
 #include <qlogging.h>
 #include <qnamespace.h>
 
+namespace qontrol {
+
 class Column : public QWidget {
     Q_OBJECT
 
@@ -29,3 +31,5 @@ public:
     void clear();
 
 };
+
+} // namespace qontrol

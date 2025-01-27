@@ -4,6 +4,8 @@
 #include <qmainwindow.h>
 #include <qtmetamacros.h>
 
+namespace qontrol {
+
 class Window : public QMainWindow {
     Q_OBJECT
 public:
@@ -11,3 +13,5 @@ public:
     virtual void loadPanel(QWidget *widget);
     virtual auto takePanel() -> QWidget*;
 };
+
+} // namespace qontrol

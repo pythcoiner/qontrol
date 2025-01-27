@@ -10,6 +10,7 @@
 #include <qlineedit.h>
 #include <qwidget.h>
 
+namespace qontrol {
 
 Screen::Screen() {
     this->setParent(Controller::window());
@@ -78,7 +79,7 @@ void Screen::updateText(const SharedJson &map, QLabel *widget) {
     UPDATE("text", setText, "String", isString, toString)
 }
 
-void Screen::updateValue(const SharedJson &map, Slider *widget) {
+void Screen::updateValue(const SharedJson &map, widgets::Slider *widget) {
     UPDATE("value", setValue, "Int", isDouble, toInt)
 }
 
@@ -103,10 +104,10 @@ auto Screen::checkbox(const QString &name) -> QCheckBox* {
 auto Screen::label(const QString &name) -> QLabel* {
     GETTER(m_labels, "label")
 }
-auto Screen::slider(const QString &name) -> Slider* {
+auto Screen::slider(const QString &name) -> widgets::Slider* {
     GETTER(m_sliders, "slider")
 }
-auto Screen::combobox(const QString &name) -> ComboBox* {
+auto Screen::combobox(const QString &name) -> widgets::ComboBox* {
     GETTER(m_comboboxes, "combobox")
 }
 
@@ -128,10 +129,10 @@ void Screen::insert(const QString &name, QCheckBox* widget) {
 void Screen::insert(const QString &name, QLabel* widget) {
     INSERT(m_labels)
 }
-void Screen::insert(const QString &name, Slider* widget) {
+void Screen::insert(const QString &name, widgets::Slider* widget) {
     INSERT(m_sliders)
 }
-void Screen::insert(const QString &name, ComboBox* widget) {
+void Screen::insert(const QString &name, widgets::ComboBox* widget) {
     INSERT(m_comboboxes)
 }
 
@@ -302,14 +303,14 @@ auto Screen::stateInner(QLabel *widget) -> Json {
 void Screen::updateSlider(Json map) {
     UPDATE_WIDGET(m_sliders, "slider", updateSliderInner)
 }
-void Screen::updateSliderInner(Json map, Slider *widget) {
+void Screen::updateSliderInner(Json map, widgets::Slider *widget) {
     std::shared_ptr<QJsonObject> sharedMap = std::move(map);
     this->updateEnabled(sharedMap, widget);
     this->updateVisible(sharedMap, widget);
     this->updateValue(sharedMap, widget);
 }
 
-auto Screen::stateInner(Slider *widget) -> Json {
+auto Screen::stateInner(widgets::Slider *widget) -> Json {
     Json json = newJson();
     json->insert("enabled", widget->isEnabled());
     json->insert("visible", widget->isVisible());
@@ -320,13 +321,13 @@ auto Screen::stateInner(Slider *widget) -> Json {
 void Screen::updateComboBox(Json map) {
     UPDATE_WIDGET(m_comboboxes, "combobox", updateComboBoxInner)
 }
-void Screen::updateComboBoxInner(Json map, ComboBox *widget) {
+void Screen::updateComboBoxInner(Json map, widgets::ComboBox *widget) {
     std::shared_ptr<QJsonObject> sharedMap = std::move(map);
     this->updateEnabled(sharedMap, widget);
     this->updateVisible(sharedMap, widget);
 }
 
-auto Screen::stateInner(ComboBox *widget) -> Json {
+auto Screen::stateInner(widgets::ComboBox *widget) -> Json {
     Json json = newJson();
     json->insert("enabled", widget->isEnabled());
     json->insert("visible", widget->isVisible());
@@ -356,5 +357,4 @@ auto Screen::state() -> Json {
     return std::move(state);
 }
 
-
-
+} // namespace qontrol

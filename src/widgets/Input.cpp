@@ -3,6 +3,8 @@
 #include <qjsonvalue.h>
 #include <qlogging.h>
 
+namespace qontrol::widgets {
+
 Input::Input(InputType input_type, QWidget *parent) : 
     QLineEdit(parent), m_type(input_type){}
 
@@ -93,3 +95,6 @@ void Input::loadValue(const QJsonValue &value, int depth) {
             }
     }
 }
+
+} // namespace qontrol::widgets
+

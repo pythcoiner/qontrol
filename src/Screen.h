@@ -18,10 +18,16 @@
 #include <qobject.h>
 #include <qpushbutton.h>
 
+namespace qontrol {
+
 class Controller;
+namespace widgets {
+
 class ComboBox;
 
-class Screen : public QWidget, public Widget {
+} // namespace widgets
+
+class Screen : public QWidget, public qontrol::widgets::Widget {
     Q_OBJECT
 public:
     explicit Screen();
@@ -31,15 +37,15 @@ public:
     auto input(const QString &name) -> QLineEdit*;
     auto checkbox(const QString &name) -> QCheckBox*;
     auto label(const QString &name) -> QLabel*;
-    auto slider(const QString &name) -> Slider*;
-    auto combobox(const QString &name) -> ComboBox*;
+    auto slider(const QString &name) -> widgets::Slider*;
+    auto combobox(const QString &name) -> widgets::ComboBox*;
 
     void insert(const QString &name, QPushButton* widget);
     void insert(const QString &name, QLineEdit* widget);
     void insert(const QString &name, QCheckBox* widget);
     void insert(const QString &name, QLabel* widget);
-    void insert(const QString &name, Slider* widget);
-    void insert(const QString &name, ComboBox* widget);
+    void insert(const QString &name, widgets::Slider* widget);
+    void insert(const QString &name, widgets::ComboBox* widget);
 
 public slots:
     void onUpdate(SharedJson state);
@@ -56,7 +62,7 @@ protected:
     void updateText(const SharedJson &map, QAbstractButton *widget);
     void updateText(const SharedJson &map, QLineEdit *widget);
     void updateText(const SharedJson &map, QLabel *widget);
-    void updateValue(const SharedJson &map, Slider *widget);
+    void updateValue(const SharedJson &map, widgets::Slider *widget);
     
     void updateIsNotNull(const char* function);
     auto keyDoesNotExists(const char* function, QJsonValue* value, const QString &name) -> bool;
@@ -82,15 +88,15 @@ protected:
     void updateInputInner(Json map, QLineEdit *widget);
     void updateCheckBoxInner(Json map, QCheckBox *widget);
     void updateLabelInner(Json map, QLabel *widget);
-    void updateSliderInner(Json map, Slider *widget);
-    void updateComboBoxInner(Json map, ComboBox *widget);
+    void updateSliderInner(Json map, widgets::Slider *widget);
+    void updateComboBoxInner(Json map, widgets::ComboBox *widget);
 
     static auto stateInner(QPushButton *widget) -> Json;
     static auto stateInner(QLineEdit *widget) -> Json;
     static auto stateInner(QCheckBox *widget) -> Json;
     static auto stateInner(QLabel *widget) -> Json;
-    static auto stateInner(Slider *widget) -> Json;
-    static auto stateInner(ComboBox *widget) -> Json;
+    static auto stateInner(widgets::Slider *widget) -> Json;
+    static auto stateInner(widgets::ComboBox *widget) -> Json;
 
     void updateStatePost();
 
@@ -110,7 +116,9 @@ private:
     QHash<QString, QLineEdit*> m_inputs;
     QHash<QString, QCheckBox*> m_checkboxes;
     QHash<QString, QLabel*> m_labels;
-    QHash<QString, Slider*> m_sliders;
-    QHash<QString, ComboBox*> m_comboboxes;
+    QHash<QString, widgets::Slider*> m_sliders;
+    QHash<QString, widgets::ComboBox*> m_comboboxes;
 
 };
+
+} // namespace qontrol

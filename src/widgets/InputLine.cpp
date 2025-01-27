@@ -5,6 +5,8 @@
 #include <qlabel.h>
 #include <qwidget.h>
 
+namespace qontrol::widgets {
+
 InputLine::InputLine(const QString &name) {
     this->setKey(name);
 }
@@ -114,3 +116,5 @@ void InputLine::loadValue(const QJsonValue &value, int depth) {
         m_input->loadValue(value);
     }
 }
+
+} // namespace qontrol::widgets

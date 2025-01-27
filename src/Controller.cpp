@@ -17,6 +17,9 @@
 #include <unistd.h>
 #include <utility>
 
+
+namespace qontrol {
+
 Controller::Controller() : 
     QObject(nullptr) ,
     m_window(nullptr)
@@ -124,3 +127,5 @@ auto Controller::enumExists(const QString &name) -> bool {
 auto Controller::isEnumsEmpty() -> bool {
     return m_enums.isEmpty();
 }
+
+} // namespace qontrol

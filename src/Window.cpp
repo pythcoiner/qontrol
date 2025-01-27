@@ -1,6 +1,8 @@
 #include "Window.h"
 #include <qmainwindow.h>
 
+namespace qontrol {
+
 Window::Window(QWidget *parent) : QMainWindow(parent) {};
 
 void Window::loadPanel(QWidget *widget) {
@@ -9,3 +11,5 @@ void Window::loadPanel(QWidget *widget) {
 auto Window::takePanel() -> QWidget* {
     return this->takeCentralWidget();
 }
+
+} // namespace qontrol

@@ -3,6 +3,8 @@
 #include <qlist.h>
 #include <qpushbutton.h>
 
+namespace qontrol::widgets {
+
 const QString PLUS = ":/icons/plus.png";
 const QString MINUS = ":/icons/minus.png";
 
@@ -43,3 +45,4 @@ void Collapsible::setCollapsed(bool collapsed) {
     }
 }
 
+} // namespace qontrol::widgets
