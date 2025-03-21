@@ -10,6 +10,7 @@ Collapsible::Collapsible(const QString &name, QWidget *parent) : Column(parent),
     m_bar = new QPushButton(QIcon(PLUS()),m_title);
     m_bar->setStyleSheet("text-align: left; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;");
     m_bar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    m_bar->setMaximumHeight(40);
     m_column = new Column();
     m_items = new QList<QWidget*>();
 
