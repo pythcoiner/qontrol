@@ -6,6 +6,7 @@
 #include "../src/Panel.h" // IWYU pragma: keep
 #include "../src/Row.h" // IWYU pragma: keep
 #include "../src/Screen.h" // IWYU pragma: keep
+#include "../src/Modal.h" // IWYU pragma: keep
 #include "../src/widgets/ComboBox.h" // IWYU pragma: keep
 #include "../src/widgets/ComboLine.h" // IWYU pragma: keep
 #include "../src/widgets/Input.h" // IWYU pragma: keep

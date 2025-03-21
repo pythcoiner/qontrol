@@ -20,6 +20,7 @@ public:
     static auto isInit() -> bool;
     static auto get() -> Controller*;
     static auto window() -> QWidget*;
+    static void execModal(QDialog *modal);
 
     auto getWindow() -> QWidget*;
     auto screen(const QString &screen) -> std::optional<Screen*>;

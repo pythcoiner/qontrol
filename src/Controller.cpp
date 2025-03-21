@@ -4,6 +4,7 @@
 #include <QtWebSockets/qwebsocket.h>
 #include <optional>
 #include <qassert.h>
+#include <qdialog.h>
 #include <qjsonarray.h>
 #include <qjsondocument.h>
 #include <qjsonobject.h>
@@ -104,6 +105,11 @@ void Controller::onClose() {
 auto Controller::window() -> QWidget* {
     return Controller::get()->getWindow();
 } 
+
+void Controller::execModal(QDialog *modal) {
+    modal->exec();
+    delete modal;
+}
 
 auto Controller::getWindow() -> QWidget* {
     return m_window;

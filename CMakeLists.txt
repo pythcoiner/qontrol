@@ -24,6 +24,7 @@ set(SOURCES
     src/Row.cpp
     src/Column.cpp
     src/Panel.cpp
+    src/Modal.cpp
     src/Screen.cpp
 )
 
