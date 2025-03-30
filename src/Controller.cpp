@@ -57,7 +57,6 @@ void Controller::loadPanels() {}
 Controller::~Controller() = default;
 
 void Controller::loadPanel(const QString &name) {
-    qDebug() << "loadPanel(" << name <<")";
     auto *panel = m_panels.value(name);
 
     if (panel == nullptr) qFatal() << "Controller::loadPanel(): Panel with name " 
@@ -67,6 +66,7 @@ void Controller::loadPanel(const QString &name) {
         auto *previousScreen = dynamic_cast<Screen*>(m_window->takePanel());
         if (previousScreen != nullptr) {
             m_current_panel->setScreen(previousScreen);
+            previousScreen->onUnload();
         }
         m_current_panel->widget()->setVisible(false);
     }

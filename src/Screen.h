@@ -49,6 +49,7 @@ public:
 
 public slots:
     void onUpdate(SharedJson state);
+    virtual void onUnload() {};
 
 signals:
     void update(const SharedJson &payload);
