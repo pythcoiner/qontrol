@@ -25,6 +25,7 @@ Modal::Modal(const QString& msg, const QString& title) {
     this->setFixedSize(300,160);
     auto *col = new qontrol::Column();
     auto *label = new QLabel(msg);
+    label->setWordWrap(true);
     auto  *btn = new QPushButton("Close");
     connect(btn, &QPushButton::clicked, this, &QDialog::close);
     auto *btnRow = (new qontrol::Row)
