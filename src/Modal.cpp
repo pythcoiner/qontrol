@@ -18,7 +18,7 @@ Modal::Modal() {
 
 }
 
-Modal::Modal(const QString& msg, const QString& title) {
+Modal::Modal(const QString& title, const QString& msg) {
     this->setModal(true);
     this->setWindowTitle(title);
     this->setLayout(new QHBoxLayout);

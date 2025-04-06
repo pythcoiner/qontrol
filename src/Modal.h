@@ -9,7 +9,7 @@ class Modal : public QDialog {
     Q_OBJECT
 public:
     Modal();
-    Modal(const QString& msg, const QString& title);
+    Modal(const QString& title, const QString& msg);
     void setMainWidget(QWidget *widget);
 private:
     QWidget *m_main_widget = nullptr;

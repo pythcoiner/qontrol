@@ -45,7 +45,7 @@ signals:
 public slots:
     void sendUpdate(SharedJson payload);
     void receiveUpdate(SharedJson payload);
-    void onClose();
+    virtual void onClose();
 
 private:
 
