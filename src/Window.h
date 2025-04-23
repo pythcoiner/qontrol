@@ -11,7 +11,7 @@ class Window : public QMainWindow {
 public:
     Window(QWidget *parent);
     virtual void loadPanel(QWidget *widget);
-    virtual auto takePanel() -> QWidget*;
+    virtual auto takePanel() -> QWidget *;
 };
 
 } // namespace qontrol

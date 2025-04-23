@@ -4,7 +4,7 @@
 
 namespace qontrol {
 
-const int QONTROL_MARGIN =30;
+const int QONTROL_MARGIN = 30;
 const int QONTROL_LEFT_MARGIN = QONTROL_MARGIN;
 const int QONTROL_RIGHT_MARGIN = QONTROL_MARGIN;
 const int QONTROL_TOP_MARGIN = QONTROL_MARGIN;
@@ -23,19 +23,23 @@ using SharedJson = std::shared_ptr<const QJsonObject>;
 inline auto newJson() -> Json {
     return std::make_unique<QJsonObject>();
 };
-inline auto newJson(const QJsonObject& obj) -> Json {
+
+inline auto newJson(const QJsonObject &obj) -> Json {
     return std::make_unique<QJsonObject>(obj);
 };
-inline auto newJson(const SharedJson& ptr) -> Json {
+
+inline auto newJson(const SharedJson &ptr) -> Json {
     return std::make_unique<QJsonObject>(*ptr);
 };
 
 inline auto newSharedJson() -> SharedJson {
     return std::make_shared<QJsonObject>();
 };
+
 inline auto newSharedJson(QJsonObject obj) -> SharedJson {
     return std::make_shared<QJsonObject>(obj);
 };
+
 inline auto newJson(Json ptr) -> SharedJson {
     return std::make_unique<QJsonObject>(std::move(*ptr));
 };

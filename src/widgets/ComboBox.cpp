@@ -1,5 +1,5 @@
 #include "ComboBox.h"
-#include "../Controller.h" 
+#include "../Controller.h"
 #include "../common.h"
 #include <qassert.h>
 #include <qcombobox.h>
@@ -9,15 +9,11 @@
 
 namespace qontrol::widgets {
 
-ComboBox::ComboBox( const QString &enum_name ,QWidget *parent) : 
-    QComboBox(parent), 
-    m_enum_name(enum_name)
-{
+ComboBox::ComboBox(const QString &enum_name, QWidget *parent) : QComboBox(parent), m_enum_name(enum_name) {
     m_values = new QList<QPair<QString, QString>>;
     this->setKey(enum_name);
     this->onUpdate();
     connect(this, &QComboBox::currentIndexChanged, this, &ComboBox::onValueChanged, UNIQUE);
-
 }
 
 void ComboBox::onUpdate() {
@@ -26,7 +22,7 @@ void ComboBox::onUpdate() {
         // store variants
         m_values->append(*values);
         QStringList list{};
-        for (const auto& variant : *m_values) {
+        for (const auto &variant : *m_values) {
             list.push_back(variant.second);
         }
         // reload variants
@@ -56,7 +52,7 @@ void ComboBox::onValueChanged(int _v) { // NOLINT
 void ComboBox::loadValue(const QJsonValue &value, int depth) {
     if (value.isString()) {
         auto str = value.toString();
-        for (const auto& kv : *m_values) {
+        for (const auto &kv : *m_values) {
             if (kv.first == str) {
                 auto index = m_values->indexOf(kv);
                 Q_ASSERT(index > -1);

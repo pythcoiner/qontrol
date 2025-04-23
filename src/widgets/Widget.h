@@ -19,6 +19,7 @@ public:
     [[nodiscard]] virtual auto hasValue() const -> bool {
         return false;
     }
+
     [[nodiscard]] virtual auto isIterable() const -> bool {
         return !m_widgets.isEmpty();
     };
@@ -30,10 +31,10 @@ public:
         return QString();
     };
 
-    static void loadValue(Widget *widget, const QJsonValue &value, int depth) { //NOLINT(misc-no-recursion)
+    static void loadValue(Widget *widget, const QJsonValue &value, int depth) { // NOLINT(misc-no-recursion)
         if (value.isObject()) {
             auto map = value.toObject();
-            for (const auto& key : map.keys()) {
+            for (const auto &key : map.keys()) {
                 if (widget->widgets()->contains(key)) {
                     widget->widgetsMut()->value(key)->loadValue(map.value(key), depth);
                 } else {
@@ -45,9 +46,10 @@ public:
         qCritical() << "Widget::loadValue() value is not an Object";
     }
 
-    virtual void loadValue(const QJsonValue &value, int depth = 0) { //NOLINT(misc-no-recursion)
+    virtual void loadValue(const QJsonValue &value, int depth = 0) { // NOLINT(misc-no-recursion)
         depth++;
-        if (depth > MAX_RECURSION) return;
+        if (depth > MAX_RECURSION)
+            return;
         Widget::loadValue(this, value, depth);
     };
 
@@ -79,36 +81,38 @@ public:
     virtual void removeWidget(const QString &name) {
         m_widgets.remove(name);
     }
- 
+
     virtual auto addWidget(QString &key, Widget *widget) -> bool {
         widget->setKey(key);
         return this->addWidget(widget);
     };
 
-    auto getWidget(const QString& name) -> std::optional<QWidget*> {
+    auto getWidget(const QString &name) -> std::optional<QWidget *> {
         auto *widget = m_widgets.value(name);
         if (widget != nullptr) {
-            auto *casted = dynamic_cast<QWidget*>(widget);
-            return std::optional<QWidget*>(casted);
+            auto *casted = dynamic_cast<QWidget *>(widget);
+            return std::optional<QWidget *>(casted);
         }
         qCritical() << "Widget::getWidget() no widget with name " << name;
         return std::nullopt;
     }
 
-    [[nodiscard]] auto widgets() const -> const QHash<QString, Widget*>* {
-        return &m_widgets;
-    }
-    [[nodiscard]] auto widgetsMut() -> QHash<QString, Widget*>* {
+    [[nodiscard]] auto widgets() const -> const QHash<QString, Widget *> * {
         return &m_widgets;
     }
 
-    static void getValue(Widget *widget, QJsonObject *map, int depth = 0) { //NOLINT(misc-no-recursion)
+    [[nodiscard]] auto widgetsMut() -> QHash<QString, Widget *> * {
+        return &m_widgets;
+    }
+
+    static void getValue(Widget *widget, QJsonObject *map, int depth = 0) { // NOLINT(misc-no-recursion)
         if (widget->hasValue()) {
             map->insert(widget->key(), widget->value());
         }
         if (widget->isIterable()) {
             depth++;
-            if (depth > MAX_RECURSION) return;
+            if (depth > MAX_RECURSION)
+                return;
             getValue(widget, map, depth);
         }
         if (!widget->hasValue() && !widget->isIterable()) {
@@ -116,7 +120,7 @@ public:
         }
     }
 
-    [[nodiscard]] virtual auto value() const -> QJsonValue { //NOLINT(misc-no-recursion)
+    [[nodiscard]] virtual auto value() const -> QJsonValue { // NOLINT(misc-no-recursion)
         auto map = QJsonObject();
         for (auto *widget : *this->widgets()) {
             getValue(widget, &map);
@@ -126,9 +130,8 @@ public:
 
 private:
     static const int MAX_RECURSION = 10;
-    std::optional<QString> m_key =  std::nullopt;
-    QHash<QString, Widget*> m_widgets;
+    std::optional<QString> m_key = std::nullopt;
+    QHash<QString, Widget *> m_widgets;
 };
-
 
 } // namespace qontrol::widgets

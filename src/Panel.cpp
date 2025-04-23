@@ -18,15 +18,15 @@ Panel::Panel(Screen *widget, const char *name) {
 
 Panel::~Panel() = default;
 
-auto Panel::widget() -> Screen* {
+auto Panel::widget() -> Screen * {
     return m_screen;
 }
 
-void Panel::setScreen(Screen* screen) {
+void Panel::setScreen(Screen *screen) {
     m_screen = screen;
 }
 
-auto Panel::name() -> const char* {
+auto Panel::name() -> const char * {
     return m_name;
 }
 
@@ -47,7 +47,7 @@ void Panel::connectScreen() {
     connect(controller, &Controller::update, m_screen, &Screen::onUpdate, UNIQUE);
 }
 
-auto Panel::screen() -> Screen* {
+auto Panel::screen() -> Screen * {
     return this->m_screen;
 }
 

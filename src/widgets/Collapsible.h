@@ -13,21 +13,19 @@ class Collapsible : public Column {
 
 public:
     explicit Collapsible(const QString &name, QWidget *parent = nullptr);
-    auto pushInner(QWidget *widget) -> Collapsible*;
+    auto pushInner(QWidget *widget) -> Collapsible *;
     void setCollapsed(bool collapsed);
 
 public slots:
     void onClicked();
 
 protected:
-
 private:
     QString m_title;
     QPushButton *m_bar = nullptr;
     Column *m_column = nullptr;
-    QList<QWidget*> *m_items = nullptr;
+    QList<QWidget *> *m_items = nullptr;
     bool m_collapsed = true;
 };
 
 } // namespace qontrol::widgets
-

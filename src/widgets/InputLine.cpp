@@ -11,35 +11,34 @@ InputLine::InputLine(const QString &name) {
     this->setKey(name);
 }
 
-auto InputLine::label(const QString &label) -> InputLine* {
+auto InputLine::label(const QString &label) -> InputLine * {
     m_label = new QLabel(label, this);
     m_label->setFixedWidth(QONTROL_LABEL_WIDTH);
     this->update();
     return this;
 }
 
-auto InputLine::input(InputType input_type) -> InputLine* {
+auto InputLine::input(InputType input_type) -> InputLine * {
     m_input = new Input(input_type);
     m_input->setFixedWidth(QONTROL_INPUT_WIDTH);
     this->update();
     return this;
 }
 
-auto InputLine::validator(QValidator *validator) -> InputLine* {
+auto InputLine::validator(QValidator *validator) -> InputLine * {
     m_input->setValidator(validator);
     return this;
-
 }
 
-auto InputLine::inputWidth(float factor) -> InputLine* {
+auto InputLine::inputWidth(float factor) -> InputLine * {
     if (m_input != nullptr) {
-        auto f = (int)(factor*1000);
+        auto f = (int)(factor * 1000);
         m_input->setFixedWidth(QONTROL_INPUT_WIDTH * f / 1000);
     }
     return this;
 }
 
-auto InputLine::unit(const QString &label) -> InputLine* {
+auto InputLine::unit(const QString &label) -> InputLine * {
     m_unit = new QLabel(label, this);
     m_unit->setFixedWidth(QONTROL_UNIT_WIDTH);
     this->update();
@@ -50,12 +49,10 @@ void InputLine::update() {
     this->clear();
     this->pushSpacer(QONTROL_LEFT_MARGIN);
     if (m_label != nullptr) {
-        this->push(m_label)
-            ->pushSpacer(QONTROL_H_SPACER);
+        this->push(m_label)->pushSpacer(QONTROL_H_SPACER);
     }
     if (m_input != nullptr) {
-        this->push(m_input)
-            ->pushSpacer(QONTROL_H_SPACER);
+        this->push(m_input)->pushSpacer(QONTROL_H_SPACER);
     } else {
     }
     if (m_unit != nullptr) {
@@ -66,15 +63,15 @@ void InputLine::update() {
     }
 }
 
-auto InputLine::hasValue() const -> bool  {
+auto InputLine::hasValue() const -> bool {
     return m_input->hasAcceptableInput();
 }
 
-auto InputLine::isIterable() const -> bool  {
+auto InputLine::isIterable() const -> bool {
     return false;
 }
 
-auto InputLine::input() -> Input* {
+auto InputLine::input() -> Input * {
     return this->m_input;
 }
 
@@ -82,14 +79,14 @@ auto InputLine::value() const -> QJsonValue {
     return m_input->value();
 }
 
-auto InputLine::setEnabled(bool enabled) -> InputLine* {
+auto InputLine::setEnabled(bool enabled) -> InputLine * {
     if (m_input != nullptr) {
         m_input->setEnabled(enabled);
     }
     return this;
 }
 
-auto InputLine::setNoFill(bool enabled) -> InputLine* {
+auto InputLine::setNoFill(bool enabled) -> InputLine * {
     m_no_fill = enabled;
     this->update();
     return this;

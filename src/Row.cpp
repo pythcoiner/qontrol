@@ -10,46 +10,45 @@ Row::Row(QWidget *parent) : QWidget(parent) {
     QWidget::setLayout(layout);
 }
 
-auto Row::push(QWidgetItem *item) -> Row* {
+auto Row::push(QWidgetItem *item) -> Row * {
     this->layout()->addItem(item);
     return this;
 }
 
-auto Row::push(QWidget *widget) -> Row* {
+auto Row::push(QWidget *widget) -> Row * {
     widget->setParent(this);
     this->layout()->addWidget(widget);
     return this;
 }
 
-auto Row::push(std::optional<QWidget*> opt_widget) -> Row* {
+auto Row::push(std::optional<QWidget *> opt_widget) -> Row * {
     if (opt_widget.has_value()) {
         this->push(opt_widget.value());
     }
     return this;
 }
 
-
-auto Row::push(QLayout *layout) -> Row* {
+auto Row::push(QLayout *layout) -> Row * {
     layout->setParent(this);
     this->layout()->addLayout(layout);
     return this;
 }
 
-auto Row::widget() -> QWidget* {
+auto Row::widget() -> QWidget * {
     return this;
 }
 
-auto Row::pushSpacer() -> Row* {
+auto Row::pushSpacer() -> Row * {
     this->layout()->addStretch();
     return this;
 }
 
-auto Row::pushSpacer(int width) -> Row* {
+auto Row::pushSpacer(int width) -> Row * {
     this->layout()->addSpacing(width);
     return this;
 }
 
-auto Row::pushStretch(int factor) -> Row* {
+auto Row::pushStretch(int factor) -> Row * {
     this->layout()->addStretch(factor);
     return this;
 }
@@ -59,16 +58,15 @@ void Row::setLayout(QLayout *layout) { // NOLINT
     qCritical() << "Layout of a Row cannot be changed";
 }
 
-// we need override the method in order to return a QHBoxLayout* because 
+// we need override the method in order to return a QHBoxLayout* because
 // addLayout() is is not implemented on QLayout
-auto Row::layout() -> QHBoxLayout* {
-    QLayout* currentLayout = QWidget::layout();
-    auto* hboxLayout = dynamic_cast<QHBoxLayout*>(currentLayout);
+auto Row::layout() -> QHBoxLayout * {
+    QLayout *currentLayout = QWidget::layout();
+    auto *hboxLayout = dynamic_cast<QHBoxLayout *>(currentLayout);
     if (hboxLayout == nullptr) {
         qFatal() << "layout is not of type QHBoxLayout!";
     }
     return hboxLayout;
-
 }
 
 void Row::clear() {

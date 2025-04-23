@@ -31,7 +31,8 @@ void SliderHeader::setPen(QPen *pen) {
 }
 
 void filter(QMap<int, QPair<QRect, QString>> *map) {
-    if ((map == nullptr) || map->size() < 2) return ;
+    if ((map == nullptr) || map->size() < 2)
+        return;
 
     auto *out = new QMap<int, QRect>;
 
@@ -43,29 +44,30 @@ void filter(QMap<int, QPair<QRect, QString>> *map) {
             insert = true;
         } else {
             bool intersectLastOut = iter.value().first.intersects((--out->end()).value());
-            bool intersectLastMap = iter.value().first.intersects((--map->end()).value().first) 
-                && iter != (--map->end());
+            bool intersectLastMap =
+                iter.value().first.intersects((--map->end()).value().first) && iter != (--map->end());
             if (!intersectLastOut && !intersectLastMap) {
                 insert = true;
-            } 
+            }
         }
 
         if (insert) {
             out->insert(iter.key(), iter.value().first);
         }
     }
-    
+
     for (auto k : map->keys()) {
         if (!out->contains(k)) {
             map->remove(k);
         }
     }
-    delete(out);
+    delete (out);
 }
 
 void SliderHeader::paintEvent(QPaintEvent *ev) {
     const auto *map = m_parent->ticksMap();
-    if ((map == nullptr) || map->isEmpty()) return;
+    if ((map == nullptr) || map->isEmpty())
+        return;
     QPainter painter(this);
     painter.setPen(*m_pen);
 
@@ -80,12 +82,13 @@ void SliderHeader::paintEvent(QPaintEvent *ev) {
     auto *labels = new QMap<int, QPair<QRect, QString>>();
     for (const auto c_tick : *map) {
         auto label = QString::number(c_tick);
-        auto tickPosition = (((c_tick - tickStart)  * (m_parent->slider()->geometry().width() - c_handle_width) ) / tickRange);
-        int tickX = tickPosition  + m_parent->leftSpace() ;
+        auto tickPosition =
+            (((c_tick - tickStart) * (m_parent->slider()->geometry().width() - c_handle_width)) / tickRange);
+        int tickX = tickPosition + m_parent->leftSpace();
 
         // define the bounding rectangle of the text
         QRect position = fontMetrics.boundingRect(label);
-        int x(tickX - (position.width()/2) + (c_handle_width / 2));
+        int x(tickX - (position.width() / 2) + (c_handle_width / 2));
         int y((this->height() - position.height()) / 2);
         position.moveTo(x, y);
 
@@ -94,7 +97,7 @@ void SliderHeader::paintEvent(QPaintEvent *ev) {
 
     filter(labels);
 
-    for (const auto& pair : *labels) {
+    for (const auto &pair : *labels) {
         painter.drawText(pair.first, pair.second);
     }
 }
@@ -124,12 +127,7 @@ Slider::Slider(int padding, QWidget *parent) : Row(parent) {
     this->load();
 }
 
-auto Slider::percent(
-    const QString &label, 
-    int label_width, 
-    QWidget *parent, 
-    int *travel_allowed
-) -> Slider* { 
+auto Slider::percent(const QString &label, int label_width, QWidget *parent, int *travel_allowed) -> Slider * {
     auto *slider = new Slider(10, parent);
     slider->m_travel_allowed = travel_allowed;
     slider->m_pre_label = new QLabel(label, slider);
@@ -143,13 +141,8 @@ auto Slider::percent(
     return slider;
 }
 
-auto Slider::cursor(
-    const QString &left_label,
-    int left_label_width, 
-    const QString &right_label,
-    int right_label_width, 
-    QWidget *parent
-) -> Slider* {
+auto Slider::cursor(const QString &left_label, int left_label_width, const QString &right_label, int right_label_width,
+                    QWidget *parent) -> Slider * {
     auto *slider = new Slider(10, parent);
     slider->m_pre_label = new QLabel(left_label, slider);
     slider->m_pre_label->setFixedWidth(left_label_width);
@@ -164,14 +157,8 @@ auto Slider::cursor(
     return slider;
 }
 
-auto Slider::axis(
-    const QString &axis_name,
-    int label_width, 
-    QList<int> ticks, 
-    bool optional, 
-    bool linear, 
-    QWidget *parent
-) -> Slider* {
+auto Slider::axis(const QString &axis_name, int label_width, QList<int> ticks, bool optional, bool linear,
+                  QWidget *parent) -> Slider * {
     auto *slider = new Slider(10, parent);
     if (optional) {
         slider->m_checkbox = new QCheckBox(slider);
@@ -193,13 +180,10 @@ auto Slider::axis(
     return slider;
 }
 
-auto Slider::simple(
-    QString name, // NOLINT
-    int label_width, 
-    QList<int> ticks, 
-    QString unit, // NOLINT
-    QWidget *parent
-) -> Slider* {
+auto Slider::simple(QString name, // NOLINT
+                    int label_width, QList<int> ticks,
+                    QString unit, // NOLINT
+                    QWidget *parent) -> Slider * {
     auto *slider = new Slider(10, parent);
     slider->m_pre_label = new QLabel(name, slider);
     slider->m_pre_label->setFixedWidth(label_width);
@@ -209,7 +193,6 @@ auto Slider::simple(
     slider->addTicks(&ticks);
     slider->load();
     return slider;
-
 }
 
 void Slider::changeEvent(QEvent *e) {
@@ -233,14 +216,14 @@ auto Slider::value() const -> QJsonValue {
 }
 
 void Slider::setPreSpacer(int v) {
-        m_pre_spacer = v;
+    m_pre_spacer = v;
 }
 
 auto Slider::getPreSpacer() const -> int {
     return m_pre_spacer;
 }
 
-auto Slider::ticksMap() -> const QMap<int, int>* {
+auto Slider::ticksMap() -> const QMap<int, int> * {
     return m_ticks;
 }
 
@@ -259,7 +242,6 @@ auto Slider::leftSpace() -> int {
         left += m_spacer;
     }
     return left;
-
 }
 
 auto Slider::rightSpace() -> int {
@@ -290,31 +272,26 @@ void Slider::load() {
         row->pushSpacer(m_pre_spacer);
     }
     if (m_checkbox != nullptr) {
-        row->push(m_checkbox)
-            ->pushSpacer(m_spacer);
+        row->push(m_checkbox)->pushSpacer(m_spacer);
         this->connectCheckbox();
     }
     if (m_pre_label != nullptr) {
-        row->push(m_pre_label)
-            -> pushSpacer(m_spacer);
+        row->push(m_pre_label)->pushSpacer(m_spacer);
     }
     row->push(m_slider);
     if (m_input != nullptr) {
-        row->pushSpacer(m_spacer)
-            ->push(m_input);
+        row->pushSpacer(m_spacer)->push(m_input);
         this->connectInput();
     }
     if (m_post_label != nullptr) {
-        row->pushSpacer(m_spacer)
-        ->push(m_post_label);
+        row->pushSpacer(m_spacer)->push(m_post_label);
     }
     if (m_post_spacer != 0) {
         row->pushSpacer(m_post_spacer);
     }
 
     auto *col = new Column;
-    col->push(m_header)
-        ->push(row);
+    col->push(m_header)->push(row);
 
     this->push(col);
 }
@@ -336,11 +313,10 @@ void Slider::connectCheckbox() {
 }
 
 void Slider::sliderValueUpdated(int v) {
-     if (m_input != nullptr) {
+    if (m_input != nullptr) {
         m_input->setText(QString::number(v));
     }
     emit this->valueUpdated(v);
-
 }
 
 void Slider::inputValueUpdated() {
@@ -361,7 +337,6 @@ void Slider::inputValueUpdated() {
     } else {
         qCritical() << "Slider.inputValueUpdated(): input is a nullptr!";
     }
-
 }
 
 void Slider::addTicks(QList<int> *ticks) {
@@ -379,8 +354,7 @@ void Slider::updateMinMax() {
     }
 }
 
-  
-auto Slider::slider() -> QSlider* {
+auto Slider::slider() -> QSlider * {
     return m_slider;
 }
 

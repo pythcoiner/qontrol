@@ -18,13 +18,10 @@
 #include <unistd.h>
 #include <utility>
 
-
 namespace qontrol {
 
-Controller::Controller() : 
-    QObject(nullptr) ,
-    m_window(nullptr)
-{}
+Controller::Controller() : QObject(nullptr), m_window(nullptr) {
+}
 
 void Controller::init(Controller *controller) {
     if (s_instance != nullptr) {
@@ -37,14 +34,14 @@ auto Controller::isInit() -> bool {
     return s_instance != nullptr;
 }
 
-auto Controller::get() -> Controller* {
+auto Controller::get() -> Controller * {
     if (s_instance == nullptr) {
         qFatal() << "Controller have not been initiated!";
     }
     return s_instance;
 }
 
-auto Controller::screen(const QString &screen) -> std::optional<Screen*> {
+auto Controller::screen(const QString &screen) -> std::optional<Screen *> {
     auto *panel = m_panels.value(screen);
     if (panel != nullptr) {
         return std::optional(panel->screen());
@@ -52,18 +49,19 @@ auto Controller::screen(const QString &screen) -> std::optional<Screen*> {
     return std::nullopt;
 }
 
-void Controller::loadPanels() {}
+void Controller::loadPanels() {
+}
 
 Controller::~Controller() = default;
 
 void Controller::loadPanel(const QString &name) {
     auto *panel = m_panels.value(name);
 
-    if (panel == nullptr) qFatal() << "Controller::loadPanel(): Panel with name " 
-        << name << " does not exists!";
+    if (panel == nullptr)
+        qFatal() << "Controller::loadPanel(): Panel with name " << name << " does not exists!";
     if (m_current_panel != nullptr) {
         // setCentralWidget() delete the replaced widget, so we had to take it first
-        auto *previousScreen = dynamic_cast<Screen*>(m_window->takePanel());
+        auto *previousScreen = dynamic_cast<Screen *>(m_window->takePanel());
         if (previousScreen != nullptr) {
             m_current_panel->setScreen(previousScreen);
             previousScreen->onUnload();
@@ -84,9 +82,11 @@ void Controller::updateState(Json state) {
     m_current_panel->updateState(std::move(state));
 }
 
-void Controller::sendUpdate(SharedJson payload) {} // NOLINT
+void Controller::sendUpdate(SharedJson payload) {
+} // NOLINT
 
-void Controller::receiveUpdate(SharedJson payload) {} // NOLINT
+void Controller::receiveUpdate(SharedJson payload) {
+} // NOLINT
 
 auto jsonFromString(const QString &msg) -> Json {
     QJsonDocument payload = QJsonDocument::fromJson(msg.toUtf8());
@@ -102,16 +102,16 @@ void Controller::onClose() {
     emit this->closed();
 }
 
-auto Controller::window() -> QWidget* {
+auto Controller::window() -> QWidget * {
     return Controller::get()->getWindow();
-} 
+}
 
 void Controller::execModal(QDialog *modal) {
     modal->exec();
     delete modal;
 }
 
-auto Controller::getWindow() -> QWidget* {
+auto Controller::getWindow() -> QWidget * {
     return m_window;
 }
 

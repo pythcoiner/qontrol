@@ -3,31 +3,24 @@
 
 namespace qontrol::widgets {
 
-ToggleSwitch::ToggleSwitch(QWidget *parent) :
-    QCheckBox(parent),
-    m_margin(3),
-    m_body_brush(Qt::lightGray)
-{
+ToggleSwitch::ToggleSwitch(QWidget *parent) : QCheckBox(parent), m_margin(3), m_body_brush(Qt::lightGray) {
     this->setChecked(false);
     this->setBrush(QColor(Qt::blue));
     this->setFixedHeight(25);
     this->setFixedWidth(25 * 15 / 10);
 }
 
-ToggleSwitch::ToggleSwitch(const QBrush &brush, QWidget *parent) :
-    QCheckBox(parent),
-    m_margin(3),
-    m_body_brush(Qt::lightGray)
-{
+ToggleSwitch::ToggleSwitch(const QBrush &brush, QWidget *parent)
+    : QCheckBox(parent),
+      m_margin(3),
+      m_body_brush(Qt::lightGray) {
     this->setChecked(false);
     this->setBrush(brush);
     this->setFixedHeight(25);
     this->setFixedWidth(25 * 15 / 10);
 }
 
-
-void ToggleSwitch::paintEvent(QPaintEvent *event)
-{
+void ToggleSwitch::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(Qt::NoPen);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -43,16 +36,7 @@ void ToggleSwitch::paintEvent(QPaintEvent *event)
         painter.setOpacity(0.20);
     }
 
-    painter.drawRoundedRect(
-        QRect(
-            0, 
-            0, 
-            this->width() ,
-            this->height()
-        ), 
-        outerRadius,
-        outerRadius
-    );
+    painter.drawRoundedRect(QRect(0, 0, this->width(), this->height()), outerRadius, outerRadius);
 
     painter.setOpacity(1.0);
     if (this->isEnabled()) {
@@ -61,25 +45,16 @@ void ToggleSwitch::paintEvent(QPaintEvent *event)
         painter.setBrush(QColor("#BDBDBD"));
     }
 
-    auto handle = QRect(
-            m_margin,
-            m_margin,
-            this->height() - (2 * m_margin),
-            this->height() - (2 * m_margin)
-        );
+    auto handle = QRect(m_margin, m_margin, this->height() - (2 * m_margin), this->height() - (2 * m_margin));
 
     // if toggled we move to the right
-    if (this->isChecked()) handle.moveTo(m_margin + travel, m_margin);
-    painter.drawRoundedRect(
-        handle,
-        handleRadius,
-        handleRadius
-    );
+    if (this->isChecked())
+        handle.moveTo(m_margin + travel, m_margin);
+    painter.drawRoundedRect(handle, handleRadius, handleRadius);
 }
 
-void ToggleSwitch::mouseReleaseEvent(QMouseEvent *event)
-{
-    if(event->button() & (Qt::LeftButton != 0U)) // NOLINT
+void ToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() & (Qt::LeftButton != 0U)) // NOLINT
     {
         this->setChecked(!this->isChecked());
     }
@@ -91,18 +66,17 @@ void ToggleSwitch::resizeEvent(QResizeEvent *e) {
     int maxWidth = size.width() * 15 / 10;
     if (size.width() < minWidth || size.width() > maxWidth) {
         // if height unchanged, adjust height
-        if ((this->height() == size.height()) && (this->width() != size.width()) ) {
+        if ((this->height() == size.height()) && (this->width() != size.width())) {
             size.setHeight(size.width() * 10 / 14);
-        // else adjust width
+            // else adjust width
         } else {
             size.setWidth(size.height() * 14 / 10);
         }
     }
     this->resize(size);
-
 }
 
-auto ToggleSwitch::value() const  -> QJsonValue {
+auto ToggleSwitch::value() const -> QJsonValue {
     if (this->hasValue()) {
         return QJsonValue(this->isChecked());
     }

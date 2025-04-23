@@ -1,7 +1,7 @@
 #include "Item.h"
 #include <optional>
 
-Item::Item(QWidget* widget) {
+Item::Item(QWidget *widget) {
     m_widget = std::make_optional(widget);
 }
 
@@ -9,7 +9,7 @@ auto Item::isWidget() const -> bool {
     return m_widget.has_value();
 }
 
-auto Item::widget() -> QWidget* {
+auto Item::widget() -> QWidget * {
     return m_widget.value();
 }
 
