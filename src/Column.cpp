@@ -1,5 +1,6 @@
 #include "Column.h"
 #include "Item.h"
+#include "Row.h"
 #include <optional>
 
 namespace qontrol {
@@ -114,5 +115,15 @@ auto Column::toItemList() -> QList<Item *> {
         list.append(item);
     }
     return list;
+}
+
+auto Column::merge(Column *column) -> Column * {
+    merge(column->toItemList());
+    return this;
+}
+
+auto Column::merge(Row *row) -> Column * {
+    merge(row->toItemList());
+    return this;
 }
 } // namespace qontrol

@@ -14,6 +14,8 @@
 
 namespace qontrol {
 
+class Row;
+
 class Column : public QWidget {
     Q_OBJECT
 public:
@@ -29,7 +31,9 @@ public:
     auto pushSpacer() -> Column *;
     auto pushSpacer(int height) -> Column *;
     auto pushStretch(int factor) -> Column *;
-    auto merge(const QList<Item *> &items) -> Column*;
+    auto merge(const QList<Item *> &items) -> Column *;
+    auto merge(Column *column) -> Column *;
+    auto merge(Row *row) -> Column *;
     void setLayout(QLayout *layout);
     auto toItemList() -> QList<Item *>;
     void clear();
