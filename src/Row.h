@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Item.h"
 #include <QLabel>
 #include <QMainWindow>
 #include <QPushButton>
@@ -18,6 +19,7 @@ class Row : public QWidget {
 
 public:
     explicit Row(QWidget *parent = nullptr);
+    ~Row() override;
     auto layout() -> QHBoxLayout *;
     auto push(QWidgetItem *item) -> Row *;
     auto push(QWidget *widget) -> Row *;
@@ -28,9 +30,12 @@ public:
     auto pushSpacer(int width) -> Row *;
     auto pushStretch(int factor) -> Row *;
     void setLayout(QLayout *layout);
+    auto toItemList() -> QList<Item *>;
+    void merge(const QList<Item *> &items);
     void clear();
 
 private:
+    QList<Item *> m_items;
 };
 
 } // namespace qontrol

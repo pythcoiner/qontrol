@@ -10,6 +10,12 @@ Row::Row(QWidget *parent) : QWidget(parent) {
     QWidget::setLayout(layout);
 }
 
+Row::~Row() {
+    for (auto *item : m_items) {
+        delete item;
+    }
+}
+
 auto Row::push(QWidgetItem *item) -> Row * {
     this->layout()->addItem(item);
     return this;
@@ -18,12 +24,14 @@ auto Row::push(QWidgetItem *item) -> Row * {
 auto Row::push(QWidget *widget) -> Row * {
     widget->setParent(this);
     this->layout()->addWidget(widget);
+    m_items.append(new Item(widget));
     return this;
 }
 
 auto Row::push(std::optional<QWidget *> opt_widget) -> Row * {
     if (opt_widget.has_value()) {
         this->push(opt_widget.value());
+        m_items.append(new Item(opt_widget.value()));
     }
     return this;
 }
@@ -40,11 +48,13 @@ auto Row::widget() -> QWidget * {
 
 auto Row::pushSpacer() -> Row * {
     this->layout()->addStretch();
+    m_items.append(new Item(Orientation::Horizontal, std::nullopt));
     return this;
 }
 
 auto Row::pushSpacer(int width) -> Row * {
     this->layout()->addSpacing(width);
+    m_items.append(new Item(Orientation::Horizontal, width));
     return this;
 }
 
@@ -77,4 +87,28 @@ void Row::clear() {
     QWidget::setLayout(layout);
 }
 
+auto Row::toItemList() -> QList<Item *> {
+    auto list = QList<Item *>();
+    for (auto *item : m_items) {
+        list.append(item);
+    }
+    return list;
+}
+
+void Row::merge(const QList<Item *> &items) {
+    for (auto *item : items) {
+        if (item->isWidget()) {
+            push(item->widget());
+        } else if (item->isSpacer()) {
+            if (item->spacer()->orientation() == Orientation::Vertical) {
+                auto value = item->spacer().value().value();
+                if (value.has_value()) {
+                    pushSpacer(value.value());
+                } else {
+                    pushSpacer();
+                }
+            }
+        }
+    }
+}
 } // namespace qontrol
