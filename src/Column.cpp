@@ -78,7 +78,7 @@ auto Column::layout() -> QVBoxLayout * {
     return vboxLayout;
 }
 
-void Column::merge(const QList<Item *> &items) {
+auto Column::merge(const QList<Item *> &items) -> Column * {
     for (auto *item : items) {
         if (item->isWidget()) {
             push(item->widget());
@@ -93,6 +93,7 @@ void Column::merge(const QList<Item *> &items) {
             }
         }
     }
+    return this;
 }
 
 void Column::clear() {

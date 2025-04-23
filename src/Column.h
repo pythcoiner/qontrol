@@ -29,9 +29,9 @@ public:
     auto pushSpacer() -> Column *;
     auto pushSpacer(int height) -> Column *;
     auto pushStretch(int factor) -> Column *;
+    auto merge(const QList<Item *> &items) -> Column*;
     void setLayout(QLayout *layout);
     auto toItemList() -> QList<Item *>;
-    void merge(const QList<Item *> &items);
     void clear();
 
 private:
