@@ -95,7 +95,7 @@ auto Row::toItemList() -> QList<Item *> {
     return list;
 }
 
-void Row::merge(const QList<Item *> &items) {
+auto Row::merge(const QList<Item *> &items) -> Row * {
     for (auto *item : items) {
         if (item->isWidget()) {
             push(item->widget());
@@ -110,5 +110,6 @@ void Row::merge(const QList<Item *> &items) {
             }
         }
     }
+    return this;
 }
 } // namespace qontrol
