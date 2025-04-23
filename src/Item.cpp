@@ -9,6 +9,10 @@ auto Item::isWidget() const -> bool {
     return m_widget.has_value();
 }
 
+auto Item::isSpacer() const -> bool {
+    return m_spacer.has_value();
+}
+
 auto Item::widget() -> QWidget * {
     return m_widget.value();
 }
