@@ -21,6 +21,7 @@ set(SOURCES
     src/widgets/ComboLine.cpp
     src/widgets/InputLine.cpp
     src/widgets/Input.cpp
+    src/Item.cpp
     src/Row.cpp
     src/Column.cpp
     src/Panel.cpp
