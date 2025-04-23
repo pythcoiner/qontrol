@@ -1,4 +1,5 @@
 #include "Row.h"
+#include "Column.h"
 #include <qwidget.h>
 
 namespace qontrol {
@@ -110,6 +111,16 @@ auto Row::merge(const QList<Item *> &items) -> Row * {
             }
         }
     }
+    return this;
+}
+
+auto Row::merge(Row *row) -> Row * {
+    merge(row->toItemList());
+    return this;
+}
+
+auto Row::merge(Column *column) -> Row * {
+    merge(column->toItemList());
     return this;
 }
 } // namespace qontrol

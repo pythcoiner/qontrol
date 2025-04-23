@@ -13,6 +13,7 @@
 #include <qnamespace.h>
 
 namespace qontrol {
+class Column;
 
 class Row : public QWidget {
     Q_OBJECT
@@ -30,6 +31,8 @@ public:
     auto pushSpacer(int width) -> Row *;
     auto pushStretch(int factor) -> Row *;
     auto merge(const QList<Item *> &items) -> Row *;
+    auto merge(Column *column) -> Row *;
+    auto merge(Row *row) -> Row *;
     void setLayout(QLayout *layout);
     auto toItemList() -> QList<Item *>;
     void clear();
