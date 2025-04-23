@@ -100,7 +100,7 @@ auto Row::merge(const QList<Item *> &items) -> Row * {
         if (item->isWidget()) {
             push(item->widget());
         } else if (item->isSpacer()) {
-            if (item->spacer()->orientation() == Orientation::Vertical) {
+            if (item->spacer()->orientation() == Orientation::Horizontal) {
                 auto value = item->spacer().value().value();
                 if (value.has_value()) {
                     pushSpacer(value.value());
