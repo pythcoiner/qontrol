@@ -1,7 +1,6 @@
 #include "Controller.h"
 #include "Screen.h"
 #include "common.h"
-#include <QtWebSockets/qwebsocket.h>
 #include <optional>
 #include <qassert.h>
 #include <qdialog.h>
