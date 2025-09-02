@@ -9,7 +9,7 @@ namespace qontrol {
 
 Panel::Panel(Screen *widget, const char *name) {
     if (widget == nullptr) {
-        qFatal() << "Panel::Panel(widget): widget should not be a nullptr!";
+        qDebug() << "Panel::Panel(widget): widget should not be a nullptr!";
     }
     m_name = name;
     m_screen = widget;
@@ -39,9 +39,9 @@ void Panel::updateState(Json update) {
 void Panel::connectScreen() {
     auto *controller = Controller::get();
     if (controller == nullptr) {
-        qFatal() << "Panel.connectScreen() pointer to controller is a nullptr!";
+        qDebug() << "Panel.connectScreen() pointer to controller is a nullptr!";
     } else if (m_screen == nullptr) {
-        qFatal() << "Panel.connectScreen() pointer to m_screen is a nullptr!";
+        qDebug() << "Panel.connectScreen() pointer to m_screen is a nullptr!";
     }
     connect(m_screen, &Screen::update, controller, &Controller::sendUpdate, UNIQUE);
     connect(controller, &Controller::update, m_screen, &Screen::onUpdate, UNIQUE);

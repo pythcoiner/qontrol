@@ -3,7 +3,6 @@
 #include "common.h"
 #include "widgets/ComboBox.h"
 #include <memory>
-#include <qassert.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qjsonobject.h>
@@ -22,7 +21,7 @@ auto Screen::className() const -> const char * {
 
 void Screen::updateIsNotNull(const char *function) {
     if (m_update == nullptr)
-        qFatal() << this->className() << "::" << function << "(): member _update is a nullptr!";
+        qDebug() << this->className() << "::" << function << "(): member _update is a nullptr!";
 }
 
 auto Screen::keyDoesNotExists(const char *function, QJsonValue *value, const QString &name) -> bool {
@@ -77,13 +76,12 @@ void Screen::updateText(const SharedJson &map, QLabel *widget) {
     UPDATE("text", setText, "String", isString, toString)
 }
 
-void Screen::updateValue(const SharedJson &map, widgets::Slider *widget) {
-    UPDATE("value", setValue, "Int", isDouble, toInt)
-}
+void Screen::updateValue(const SharedJson &map,
+                         widgets::Slider *widget){UPDATE("value", setValue, "Int", isDouble, toInt)}
 
 #define GETTER(member, typeName)                                                                                       \
     if (!this->member.contains(name)) {                                                                                \
-        qFatal() << this->className() << " does not contain " << typeName << " with name " << name;                    \
+        qDebug() << this->className() << " does not contain " << typeName << " with name " << name;                    \
         return nullptr;                                                                                                \
     }                                                                                                                  \
     return this->member.value(name);
@@ -108,9 +106,7 @@ auto Screen::slider(const QString &name) -> widgets::Slider * {
     GETTER(m_sliders, "slider")
 }
 
-auto Screen::combobox(const QString &name) -> widgets::ComboBox * {
-    GETTER(m_comboboxes, "combobox")
-}
+auto Screen::combobox(const QString &name) -> widgets::ComboBox *{GETTER(m_comboboxes, "combobox")}
 
 #define INSERT(member)                                                                                                 \
     widget->setParent(this);                                                                                           \
@@ -208,28 +204,26 @@ void Screen::updateSliders(Json widgets) {
     UPDATE_WIDGETS(updateSlider)
 }
 
-void Screen::updateComboBoxes(Json widgets) {
-    UPDATE_WIDGETS(updateComboBox)
-}
+void Screen::updateComboBoxes(Json widgets){UPDATE_WIDGETS(updateComboBox)}
 
 #define UPDATE_WIDGET(member, typeName, innerMethod)                                                                   \
     if (map->isEmpty())                                                                                                \
         return;                                                                                                        \
     QString name;                                                                                                      \
     if (!map->contains("name")) {                                                                                      \
-        qFatal() << this->className() << "::" << __func__ << ": name is missing!";                                     \
+        qDebug() << this->className() << "::" << __func__ << ": name is missing!";                                     \
         return;                                                                                                        \
     }                                                                                                                  \
     name = map->value("name").toString();                                                                              \
     if (name.isEmpty()) {                                                                                              \
-        qFatal() << this->className() << "::" << __func__ << ": name is empty!";                                       \
+        qDebug() << this->className() << "::" << __func__ << ": name is empty!";                                       \
         return;                                                                                                        \
     }                                                                                                                  \
     qDebug() << "Updating " << typeName << " " << name;                                                                \
     if (this->member.contains(name)) {                                                                                 \
         auto edited = this->member.value(name);                                                                        \
         if (edited == nullptr) {                                                                                       \
-            qFatal() << this->className() << "::" << __func__ << ": " << name << typeName                              \
+            qDebug() << this->className() << "::" << __func__ << ": " << name << typeName                              \
                      << " missing from the internal state!";                                                           \
             return;                                                                                                    \
         }                                                                                                              \

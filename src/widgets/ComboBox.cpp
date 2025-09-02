@@ -1,7 +1,6 @@
 #include "ComboBox.h"
 #include "../Controller.h"
 #include "../common.h"
-#include <qassert.h>
 #include <qcombobox.h>
 #include <qcontainerfwd.h>
 #include <qjsonvalue.h>

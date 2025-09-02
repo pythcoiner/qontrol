@@ -74,7 +74,7 @@ auto Column::layout() -> QVBoxLayout * {
     QLayout *currentLayout = QWidget::layout();
     auto *vboxLayout = dynamic_cast<QVBoxLayout *>(currentLayout);
     if (vboxLayout == nullptr) {
-        qFatal() << "layout is not of type QVBoxLayout!";
+        qDebug() << "layout is not of type QVBoxLayout!";
     }
     return vboxLayout;
 }

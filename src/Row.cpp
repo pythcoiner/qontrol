@@ -75,7 +75,7 @@ auto Row::layout() -> QHBoxLayout * {
     QLayout *currentLayout = QWidget::layout();
     auto *hboxLayout = dynamic_cast<QHBoxLayout *>(currentLayout);
     if (hboxLayout == nullptr) {
-        qFatal() << "layout is not of type QHBoxLayout!";
+        qDebug() << "layout is not of type QHBoxLayout!";
     }
     return hboxLayout;
 }

@@ -2,7 +2,6 @@
 #include "Screen.h"
 #include "common.h"
 #include <optional>
-#include <qassert.h>
 #include <qdialog.h>
 #include <qjsonarray.h>
 #include <qjsondocument.h>
@@ -24,7 +23,7 @@ Controller::Controller() : QObject(nullptr), m_window(nullptr) {
 
 void Controller::init(Controller *controller) {
     if (s_instance != nullptr) {
-        qFatal() << "Controller have already been initiated!";
+        qDebug() << "Controller have already been initiated!";
     }
     s_instance = controller;
 }
@@ -35,7 +34,7 @@ auto Controller::isInit() -> bool {
 
 auto Controller::get() -> Controller * {
     if (s_instance == nullptr) {
-        qFatal() << "Controller have not been initiated!";
+        qDebug() << "Controller have not been initiated!";
     }
     return s_instance;
 }
@@ -57,7 +56,7 @@ void Controller::loadPanel(const QString &name) {
     auto *panel = m_panels.value(name);
 
     if (panel == nullptr)
-        qFatal() << "Controller::loadPanel(): Panel with name " << name << " does not exists!";
+        qDebug() << "Controller::loadPanel(): Panel with name " << name << " does not exists!";
     if (m_current_panel != nullptr) {
         // setCentralWidget() delete the replaced widget, so we had to take it first
         auto *previousScreen = dynamic_cast<Screen *>(m_window->takePanel());
