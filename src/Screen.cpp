@@ -352,7 +352,8 @@ void Screen::updateStatePost() {
 #define STATE(key, member)                                                                                             \
     {                                                                                                                  \
         Json widgets = newJson();                                                                                      \
-        for (auto [name, widget] : this->member.asKeyValueRange()) {                                                   \
+        for (const auto &name : this->m_buttons.keys()) {                                                              \
+            auto *widget = this->m_buttons.value(name);                                                                \
             Json map = this->stateInner(widget);                                                                       \
             widgets->insert(name, *map);                                                                               \
         }                                                                                                              \
