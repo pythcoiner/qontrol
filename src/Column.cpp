@@ -103,6 +103,9 @@ void Column::clear() {
     layout->setSpacing(0);
     delete this->layout();
     for (auto *item : m_items) {
+        if (item->isWidget()) {
+            delete item->widget();
+        }
         delete item;
     }
     m_items.clear();
