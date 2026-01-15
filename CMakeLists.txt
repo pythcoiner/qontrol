@@ -42,3 +42,5 @@ set_target_properties(${LIB_QONTROL_QONTROL} PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON
 )
+
+add_subdirectory(tests)
