@@ -18,12 +18,8 @@ public:
     auto setEnabled(bool enabled) -> ComboLine *;
     auto setNoFill(bool enabled) -> ComboLine *;
 
-    [[nodiscard]] auto hasValue() const -> bool override;
-    [[nodiscard]] auto value() const -> QJsonValue override;
-    [[nodiscard]] auto isIterable() const -> bool override;
     auto combo() -> ComboBox *;
     void setCurrentIndex(int index);
-    void loadValue(const QJsonValue &value, int depth = 0) override;
 
 private:
     void update();

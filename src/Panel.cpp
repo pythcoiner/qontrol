@@ -1,7 +1,6 @@
 #include "Panel.h"
 #include "Controller.h"
 #include "Screen.h"
-#include "common.h"
 #include <qlogging.h>
 #include <qnamespace.h>
 
@@ -28,23 +27,6 @@ void Panel::setScreen(Screen *screen) {
 
 auto Panel::name() -> const char * {
     return m_name;
-}
-
-void Panel::updateState(Json update) {
-    auto *widget = this->widget();
-    SharedJson ptr = std::move(update);
-    widget->onUpdate(ptr);
-}
-
-void Panel::connectScreen() {
-    auto *controller = Controller::get();
-    if (controller == nullptr) {
-        qDebug() << "Panel.connectScreen() pointer to controller is a nullptr!";
-    } else if (m_screen == nullptr) {
-        qDebug() << "Panel.connectScreen() pointer to m_screen is a nullptr!";
-    }
-    connect(m_screen, &Screen::update, controller, &Controller::sendUpdate, UNIQUE);
-    connect(controller, &Controller::update, m_screen, &Screen::onUpdate, UNIQUE);
 }
 
 auto Panel::screen() -> Screen * {

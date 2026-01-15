@@ -7,7 +7,6 @@
 namespace qontrol::widgets {
 
 ComboLine::ComboLine(const QString &name) {
-    this->setKey(name);
 }
 
 auto ComboLine::label(const QString &label) -> ComboLine * {
@@ -56,18 +55,6 @@ void ComboLine::update() {
     }
 }
 
-auto ComboLine::hasValue() const -> bool {
-    return m_combo != nullptr;
-}
-
-auto ComboLine::value() const -> QJsonValue {
-    return m_combo->value();
-}
-
-auto ComboLine::isIterable() const -> bool {
-    return false;
-}
-
 auto ComboLine::combo() -> ComboBox * {
     return this->m_combo;
 }
@@ -94,12 +81,6 @@ void ComboLine::setCurrentIndex(int index) {
         }
     } else {
         qCritical() << "ComboLine::setCurrentIndex() m_combo is nullptr";
-    }
-}
-
-void ComboLine::loadValue(const QJsonValue &value, int depth) {
-    if (m_combo != nullptr) {
-        m_combo->loadValue(value);
     }
 }
 

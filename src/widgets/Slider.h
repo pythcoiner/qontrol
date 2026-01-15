@@ -9,7 +9,6 @@
 #include <QString>
 #include <QWidget>
 #include <qcheckbox.h>
-#include <qjsonvalue.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qobject.h>
@@ -62,11 +61,7 @@ public:
     auto rightSpace() -> int;
     [[nodiscard]] auto handleWidth() const -> int;
 
-    [[nodiscard]] auto value() const -> QJsonValue override;
-
-    [[nodiscard]] auto hasValue() const -> bool override {
-        return this->hasKey();
-    };
+    [[nodiscard]] auto value() const -> int;
 
     void setValue(int v);
 

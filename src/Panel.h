@@ -1,10 +1,8 @@
 #pragma once
 
-#include "./common.h"
 #include "Screen.h"
 #include <QPointer>
 #include <QWidget>
-#include <qjsonobject.h>
 #include <qobject.h>
 
 namespace qontrol {
@@ -19,9 +17,6 @@ public:
     auto widget() -> Screen *;
     void setScreen(Screen *screen);
     auto name() -> const char *;
-    void updateState(Json update);
-    void connectScreen();
-    void disconnectScreen();
     auto screen() -> Screen *;
 
 private:

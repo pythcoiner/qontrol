@@ -31,19 +31,14 @@ public:
 
     void loadPanel(const QString &name);
     void insertPanel(Panel *panel);
-    void updateState(Json state);
 
     virtual void start(Window *window);
     virtual void loadPanels();
 
 signals:
-    void update(SharedJson state);
-    void externalUpdate(SharedJson update);
     void closed();
 
 public slots:
-    void sendUpdate(SharedJson payload);
-    void receiveUpdate(SharedJson payload);
     virtual void onClose();
 
 private:

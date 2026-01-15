@@ -76,11 +76,4 @@ void ToggleSwitch::resizeEvent(QResizeEvent *e) {
     this->resize(size);
 }
 
-auto ToggleSwitch::value() const -> QJsonValue {
-    if (this->hasValue()) {
-        return QJsonValue(this->isChecked());
-    }
-    return QJsonValue::Null;
-}
-
 } // namespace qontrol::widgets

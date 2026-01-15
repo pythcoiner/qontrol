@@ -1,14 +1,12 @@
 #include "InputLine.h"
 #include "../common.h"
 #include "Input.h"
-#include <qjsonvalue.h>
 #include <qlabel.h>
 #include <qwidget.h>
 
 namespace qontrol::widgets {
 
 InputLine::InputLine(const QString &name) {
-    this->setKey(name);
 }
 
 auto InputLine::label(const QString &label) -> InputLine * {
@@ -63,20 +61,8 @@ void InputLine::update() {
     }
 }
 
-auto InputLine::hasValue() const -> bool {
-    return m_input->hasAcceptableInput();
-}
-
-auto InputLine::isIterable() const -> bool {
-    return false;
-}
-
 auto InputLine::input() -> Input * {
     return this->m_input;
-}
-
-auto InputLine::value() const -> QJsonValue {
-    return m_input->value();
 }
 
 auto InputLine::setEnabled(bool enabled) -> InputLine * {
@@ -106,12 +92,6 @@ void InputLine::setValue(int value) {
 
 void InputLine::setValue(double value) {
     this->setValue(QString().setNum(value));
-}
-
-void InputLine::loadValue(const QJsonValue &value, int depth) {
-    if (m_input != nullptr) {
-        m_input->loadValue(value);
-    }
 }
 
 } // namespace qontrol::widgets

@@ -7,7 +7,6 @@
 #include <qcheckbox.h>
 #include <qcontainerfwd.h>
 #include <qcoreevent.h>
-#include <qjsonvalue.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlist.h>
@@ -210,9 +209,8 @@ void Slider::setValue(int v) {
     }
 }
 
-auto Slider::value() const -> QJsonValue {
-    // return m_slider->value();
-    return QJsonValue(m_slider->value());
+auto Slider::value() const -> int {
+    return m_slider->value();
 }
 
 void Slider::setPreSpacer(int v) {

@@ -6,7 +6,6 @@
 #include <QtWidgets>
 #include <qcheckbox.h>
 #include <qevent.h>
-#include <qjsonvalue.h>
 #include <qsize.h>
 
 namespace qontrol::widgets {
@@ -21,16 +20,6 @@ public:
 
     [[nodiscard]] virtual auto brush(void) const -> QBrush;
     virtual void setBrush(const QBrush &brush);
-
-    [[nodiscard]] auto hasValue() const -> bool override {
-        return this->hasKey();
-    }
-
-    [[nodiscard]] auto value() const -> QJsonValue override;
-
-    [[nodiscard]] auto isIterable() const -> bool override {
-        return false;
-    }
 
 protected:
     void paintEvent(QPaintEvent *e) override;

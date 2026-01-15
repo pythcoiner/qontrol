@@ -1,11 +1,7 @@
 #include "Controller.h"
 #include "Screen.h"
-#include "common.h"
 #include <optional>
 #include <qdialog.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
 #include <qlogging.h>
 #include <qobject.h>
 #include <qpointer.h>
@@ -67,33 +63,12 @@ void Controller::loadPanel(const QString &name) {
         m_current_panel->widget()->setVisible(false);
     }
     m_current_panel = panel;
-    m_current_panel->connectScreen();
     m_window->loadPanel(m_current_panel->widget());
     m_current_panel->widget()->setVisible(true);
 }
 
 void Controller::insertPanel(Panel *panel) {
     m_panels.insert(panel->name(), panel);
-}
-
-void Controller::updateState(Json state) {
-    m_current_panel->updateState(std::move(state));
-}
-
-void Controller::sendUpdate(SharedJson payload) {
-} // NOLINT
-
-void Controller::receiveUpdate(SharedJson payload) {
-} // NOLINT
-
-auto jsonFromString(const QString &msg) -> Json {
-    QJsonDocument payload = QJsonDocument::fromJson(msg.toUtf8());
-    if (payload.isNull() || !payload.isObject()) {
-        qCritical() << "invalid json payload:" << msg;
-        return newJson();
-    }
-    Json json = newJson(payload.object());
-    return std::move(json);
 }
 
 void Controller::onClose() {
