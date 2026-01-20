@@ -24,6 +24,7 @@ auto Column::push(QWidgetItem *item) -> Column * {
 }
 
 auto Column::push(QWidget *widget) -> Column * {
+    widget->setParent(this);
     this->layout()->addWidget(widget);
     m_items.append(new Item(widget));
     return this;
@@ -32,12 +33,12 @@ auto Column::push(QWidget *widget) -> Column * {
 auto Column::push(std::optional<QWidget *> opt_widget) -> Column * {
     if (opt_widget.has_value()) {
         this->push(opt_widget.value());
-        m_items.append(new Item(opt_widget.value()));
     }
     return this;
 }
 
 auto Column::push(QLayout *layout) -> Column * {
+    layout->setParent(this);
     this->layout()->addLayout(layout);
     return this;
 }
