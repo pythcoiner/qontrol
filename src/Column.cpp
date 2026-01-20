@@ -108,6 +108,8 @@ void Column::clear() {
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     delete this->layout();
+    // Qt layouts don't own widgets, so deleting the layout doesn't delete
+    // the widgets. We must delete them explicitly here.
     for (auto *item : m_items) {
         if (item->isWidget()) {
             delete item->widget();
