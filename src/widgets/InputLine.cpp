@@ -17,7 +17,7 @@ auto InputLine::label(const QString &label) -> InputLine * {
 }
 
 auto InputLine::input(InputType input_type) -> InputLine * {
-    m_input = new Input(input_type);
+    m_input = new Input(input_type, this);
     m_input->setFixedWidth(QONTROL_INPUT_WIDTH);
     this->update();
     return this;
