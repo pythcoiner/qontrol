@@ -32,7 +32,6 @@ auto Row::push(QWidget *widget) -> Row * {
 auto Row::push(std::optional<QWidget *> opt_widget) -> Row * {
     if (opt_widget.has_value()) {
         this->push(opt_widget.value());
-        m_items.append(new Item(opt_widget.value()));
     }
     return this;
 }
