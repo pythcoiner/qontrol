@@ -19,7 +19,7 @@ Controller::Controller() : QObject(nullptr), m_window(nullptr) {
 
 void Controller::init(Controller *controller) {
     if (s_instance != nullptr) {
-        qDebug() << "Controller have already been initiated!";
+        qDebug() << "Controller has already been initiated!";
     }
     s_instance = controller;
 }
@@ -30,7 +30,7 @@ auto Controller::isInit() -> bool {
 
 auto Controller::get() -> Controller * {
     if (s_instance == nullptr) {
-        qDebug() << "Controller have not been initiated!";
+        qDebug() << "Controller has not been initiated!";
     }
     return s_instance;
 }
