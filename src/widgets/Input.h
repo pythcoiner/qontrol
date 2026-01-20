@@ -2,9 +2,6 @@
 
 #include "Widget.h"
 #include <QLineEdit>
-#include <QString>
-#include <QWidget>
-#include <qobject.h>
 
 namespace qontrol::widgets {
 

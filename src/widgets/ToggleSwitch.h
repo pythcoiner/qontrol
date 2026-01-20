@@ -1,12 +1,9 @@
 #pragma once
 
 #include "Widget.h"
-#include <QObject>
-#include <QWidget>
+#include <QCheckBox>
+#include <QEvent>
 #include <QtWidgets>
-#include <qcheckbox.h>
-#include <qevent.h>
-#include <qsize.h>
 
 namespace qontrol::widgets {
 

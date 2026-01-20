@@ -1,12 +1,10 @@
 #pragma once
 
+#include <optional>
+#include <QHash>
+#include <QLoggingCategory>
 #include <QString>
 #include <QWidget>
-#include <optional>
-#include <qhash.h>
-#include <qlist.h>
-#include <qlogging.h>
-#include <qobject.h>
 
 namespace qontrol::widgets {
 

@@ -3,8 +3,8 @@
 #include "../Row.h"
 #include "Input.h"
 #include "Widget.h"
-#include <qlabel.h>
-#include <qvalidator.h>
+#include <QLabel>
+#include <QValidator>
 
 namespace qontrol::widgets {
 

@@ -1,8 +1,6 @@
 #include "ComboLine.h"
 #include "../common.h"
-#include <qlabel.h>
-#include <qlogging.h>
-#include <qwidget.h>
+#include <QLoggingCategory>
 
 namespace qontrol::widgets {
 

@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Screen.h"
+#include <QObject>
 #include <QPointer>
-#include <QWidget>
-#include <qobject.h>
 
 namespace qontrol {
 

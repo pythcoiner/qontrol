@@ -3,19 +3,9 @@
 #include "../Row.h"
 #include "../common.h"
 #include <algorithm>
-#include <cstdarg>
-#include <qcheckbox.h>
-#include <qcontainerfwd.h>
-#include <qcoreevent.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlist.h>
-#include <qlogging.h>
-#include <qmap.h>
-#include <qnamespace.h>
-#include <qpen.h>
-#include <qslider.h>
-#include <qwidget.h>
+#include <QEvent>
+#include <QLoggingCategory>
+#include <QPen>
 
 namespace qontrol::widgets {
 

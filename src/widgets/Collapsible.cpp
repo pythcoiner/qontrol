@@ -1,8 +1,6 @@
 #include "Collapsible.h"
 #include "../../resources/icons/icons.h"
 #include "../Column.h"
-#include <qlist.h>
-#include <qpushbutton.h>
 
 namespace qontrol::widgets {
 

@@ -3,7 +3,7 @@
 #include "../Row.h"
 #include "ComboBox.h"
 #include "Widget.h"
-#include <qlabel.h>
+#include <QLabel>
 
 namespace qontrol::widgets {
 

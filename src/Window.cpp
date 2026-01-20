@@ -1,5 +1,4 @@
 #include "Window.h"
-#include <qmainwindow.h>
 
 namespace qontrol {
 

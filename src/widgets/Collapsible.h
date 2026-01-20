@@ -1,10 +1,8 @@
 #pragma once
 
 #include "../Column.h"
-#include <QWidget>
-#include <qlist.h>
-#include <qobject.h>
-#include <qpushbutton.h>
+#include <QList>
+#include <QPushButton>
 
 namespace qontrol::widgets {
 

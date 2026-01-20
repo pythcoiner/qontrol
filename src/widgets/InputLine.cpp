@@ -1,8 +1,7 @@
 #include "InputLine.h"
 #include "../common.h"
 #include "Input.h"
-#include <qlabel.h>
-#include <qwidget.h>
+#include <QLoggingCategory>
 
 namespace qontrol::widgets {
 

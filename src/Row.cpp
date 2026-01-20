@@ -1,6 +1,5 @@
 #include "Row.h"
 #include "Column.h"
-#include <qwidget.h>
 
 namespace qontrol {
 

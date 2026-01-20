@@ -1,5 +1,4 @@
 #include "ToggleSwitch.h"
-#include <qlogging.h>
 
 namespace qontrol::widgets {
 

@@ -2,8 +2,8 @@
 
 #include <cstdint>
 #include <optional>
-#include <qlayoutitem.h>
-#include <qwidget.h>
+#include <QLayoutItem>
+#include <QWidget>
 
 enum class Orientation : uint8_t {
     Horizontal,

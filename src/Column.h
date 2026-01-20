@@ -1,16 +1,9 @@
 #pragma once
 
 #include "Item.h"
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QMainWindow>
-#include <QPushButton>
+#include <QLoggingCategory>
 #include <QVBoxLayout>
 #include <QWidget>
-#include <qboxlayout.h>
-#include <qlayout.h>
-#include <qlogging.h>
-#include <qnamespace.h>
 
 namespace qontrol {
 

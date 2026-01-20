@@ -1,16 +1,8 @@
 #include "Controller.h"
 #include "Screen.h"
 #include <optional>
-#include <qdialog.h>
-#include <qlogging.h>
-#include <qobject.h>
-#include <qpointer.h>
-#include <qqueue.h>
-#include <qscopedpointer.h>
-#include <qtmetamacros.h>
-#include <qwidget.h>
-#include <unistd.h>
-#include <utility>
+#include <QDialog>
+#include <QLoggingCategory>
 
 namespace qontrol {
 

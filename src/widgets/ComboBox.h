@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Widget.h"
-#include <QString>
-#include <QWidget>
-#include <qcombobox.h>
-#include <qobject.h>
+#include <QComboBox>
 
 namespace qontrol::widgets {
 

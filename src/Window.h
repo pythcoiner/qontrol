@@ -1,8 +1,6 @@
 #pragma once
 
 #include <QMainWindow>
-#include <qmainwindow.h>
-#include <qtmetamacros.h>
 
 namespace qontrol {
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <qdialog.h>
-#include <qtmetamacros.h>
+#include <QDialog>
 
 namespace qontrol {
 

@@ -3,12 +3,9 @@
 #include "Row.h"
 
 #include <Qontrol>
-#include <qboxlayout.h>
-#include <qdialog.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qstringliteral.h>
-#include <qwidget.h>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 
 namespace qontrol {
 

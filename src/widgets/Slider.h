@@ -2,19 +2,13 @@
 
 #include "Row.h"
 #include "Widget.h"
+#include <QCheckBox>
 #include <QFontMetrics>
+#include <QLabel>
+#include <QLineEdit>
 #include <QMap>
 #include <QPainter>
 #include <QSlider>
-#include <QString>
-#include <QWidget>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qobject.h>
-#include <qslider.h>
-#include <qtmetamacros.h>
-#include <qwidget.h>
 
 namespace qontrol::widgets {
 

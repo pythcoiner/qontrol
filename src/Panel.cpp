@@ -1,8 +1,7 @@
 #include "Panel.h"
 #include "Controller.h"
 #include "Screen.h"
-#include <qlogging.h>
-#include <qnamespace.h>
+#include <QLoggingCategory>
 
 namespace qontrol {
 
