@@ -13,6 +13,7 @@ class ComboBox : public QComboBox, Widget {
 
 public:
     explicit ComboBox(const QString &enum_name, QWidget *parent = nullptr);
+    ~ComboBox() override { delete m_values; }
 
 signals:
     void valueChanged();
