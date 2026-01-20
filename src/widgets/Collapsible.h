@@ -13,6 +13,7 @@ class Collapsible : public Column {
 
 public:
     explicit Collapsible(const QString &name, QWidget *parent = nullptr);
+    ~Collapsible() override { delete m_items; }
     auto pushInner(QWidget *widget) -> Collapsible *;
     void setCollapsed(bool collapsed);
 
