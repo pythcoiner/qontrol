@@ -4,6 +4,7 @@
 #include <Panel.h>
 #include <QMainWindow>
 #include <QObject>
+#include <QPointer>
 #include <QWidget>
 
 namespace qontrol {
@@ -44,7 +45,7 @@ public slots:
 private:
     QPointer<Panel> m_current_panel;
     QHash<QString, Panel *> m_panels;
-    Window *m_window;
+    QPointer<Window> m_window;
     QHash<QString, QList<QPair<QString, QString>>> m_enums;
     inline static Controller *s_instance = nullptr; // NOLINT(readability-identifier-naming)
 };
