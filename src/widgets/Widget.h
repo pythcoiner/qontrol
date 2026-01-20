@@ -13,6 +13,8 @@ namespace qontrol::widgets {
 class Widget {
 
 public:
+    virtual ~Widget() = default;
+
     [[nodiscard]] auto key() const -> QString {
         if (m_key.has_value()) {
             return m_key.value();
