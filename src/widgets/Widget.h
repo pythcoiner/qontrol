@@ -39,7 +39,7 @@ public:
     }
 
     virtual auto addWidget(Widget *widget) -> bool {
-        if (widget->hasKey() and widget->key() != "") {
+        if (widget->hasKey()) {
             m_widgets.insert(widget->key(), widget);
             return true;
         }
