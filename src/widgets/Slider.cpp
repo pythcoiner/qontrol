@@ -109,7 +109,6 @@ void SliderHeader::paintEvent(QPaintEvent *ev) {
 
 Slider::Slider(int padding, QWidget *parent) : Row(parent) {
     m_pen = nullptr;
-    m_travel_allowed = nullptr;
     // this->setStyleSheet("background-color: red;");
     m_header = new SliderHeader(this);
     m_header->setFixedHeight(20);
@@ -132,9 +131,8 @@ Slider::Slider(int padding, QWidget *parent) : Row(parent) {
     this->load();
 }
 
-auto Slider::percent(const QString &label, int label_width, QWidget *parent, int *travel_allowed) -> Slider * {
+auto Slider::percent(const QString &label, int label_width, QWidget *parent) -> Slider * {
     auto *slider = new Slider(10, parent);
-    slider->m_travel_allowed = travel_allowed;
     slider->m_pre_label = new QLabel(label, slider);
     slider->m_pre_label->setFixedWidth(label_width);
     slider->m_input = new QLineEdit(slider);

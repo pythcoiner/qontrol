@@ -49,8 +49,7 @@ public:
     ~Slider() override;
 
 
-    static auto percent(const QString &label, int label_width, QWidget *parent = nullptr, int *travel_allowed = nullptr)
-        -> Slider *;
+    static auto percent(const QString &label, int label_width, QWidget *parent = nullptr) -> Slider *;
     static auto cursor(const QString &left_label, int left_label_width, const QString &right_label,
                        int right_label_width, QWidget *parent) -> Slider *;
     static auto axis(const QString &axis_name, int label_width, QList<int> ticks, bool optional, bool linear,
@@ -92,7 +91,6 @@ private:
     QMap<int, int> *m_ticks;
     QPen *m_pen;
 
-    int *m_travel_allowed;
     int m_spacer;
     int m_pre_spacer;
     int m_post_spacer;
