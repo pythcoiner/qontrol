@@ -38,6 +38,7 @@ auto Row::push(std::optional<QWidget *> opt_widget) -> Row * {
 }
 
 auto Row::push(QLayout *layout) -> Row * {
+    layout->setParent(this);
     this->layout()->addLayout(layout);
     return this;
 }
