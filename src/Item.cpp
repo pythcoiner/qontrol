@@ -14,7 +14,7 @@ auto Item::isSpacer() const -> bool {
 }
 
 auto Item::widget() -> QWidget * {
-    return m_widget.value();
+    return m_widget.has_value() ? m_widget.value() : nullptr;
 }
 
 auto Item::spacer() -> std::optional<Spacer> {
