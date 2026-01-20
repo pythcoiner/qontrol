@@ -6,6 +6,22 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Memory leak detection options
+option(ENABLE_ASAN "Enable AddressSanitizer for memory leak detection" OFF)
+option(ENABLE_LSAN "Enable LeakSanitizer only (lighter weight)" OFF)
+
+if(ENABLE_ASAN)
+    message(STATUS "AddressSanitizer enabled")
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
+    add_link_options(-fsanitize=address)
+endif()
+
+if(ENABLE_LSAN AND NOT ENABLE_ASAN)
+    message(STATUS "LeakSanitizer enabled")
+    add_compile_options(-fsanitize=leak -fno-omit-frame-pointer -g)
+    add_link_options(-fsanitize=leak)
+endif()
+
 find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Core)
 
 set(CMAKE_AUTOMOC ON)
