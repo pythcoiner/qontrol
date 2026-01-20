@@ -37,8 +37,13 @@ auto Row::push(std::optional<QWidget *> opt_widget) -> Row * {
 }
 
 auto Row::push(QLayout *layout) -> Row * {
-    layout->setParent(this);
     this->layout()->addLayout(layout);
+    // Set parent on all widgets in the layout so they get deleted with this Row
+    for (int i = 0; i < layout->count(); ++i) {
+        if (auto *widget = layout->itemAt(i)->widget()) {
+            widget->setParent(this);
+        }
+    }
     return this;
 }
 

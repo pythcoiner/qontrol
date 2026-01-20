@@ -38,8 +38,13 @@ auto Column::push(std::optional<QWidget *> opt_widget) -> Column * {
 }
 
 auto Column::push(QLayout *layout) -> Column * {
-    layout->setParent(this);
     this->layout()->addLayout(layout);
+    // Set parent on all widgets in the layout so they get deleted with this Column
+    for (int i = 0; i < layout->count(); ++i) {
+        if (auto *widget = layout->itemAt(i)->widget()) {
+            widget->setParent(this);
+        }
+    }
     return this;
 }
 
