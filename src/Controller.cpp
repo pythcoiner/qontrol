@@ -92,19 +92,4 @@ void Controller::start(Window *window) {
     m_window = window;
 }
 
-auto Controller::getEnum(const QString &name) -> std::optional<QList<QPair<QString, QString>>> {
-    if (m_enums.contains(name)) {
-        return std::optional(m_enums.value(name));
-    }
-    return std::nullopt;
-}
-
-auto Controller::enumExists(const QString &name) -> bool {
-    return m_enums.contains(name);
-}
-
-auto Controller::isEnumsEmpty() -> bool {
-    return m_enums.isEmpty();
-}
-
 } // namespace qontrol

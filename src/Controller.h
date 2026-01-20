@@ -26,10 +26,6 @@ public:
     auto getWindow() -> QWidget *;
     auto screen(const QString &screen) -> std::optional<Screen *>;
 
-    auto getEnum(const QString &name) -> std::optional<QList<QPair<QString, QString>>>;
-    auto enumExists(const QString &name) -> bool;
-    auto isEnumsEmpty() -> bool;
-
     void loadPanel(const QString &name);
     void insertPanel(Panel *panel);
 
@@ -46,7 +42,6 @@ private:
     QPointer<Panel> m_current_panel;
     QHash<QString, Panel *> m_panels;
     QPointer<Window> m_window;
-    QHash<QString, QList<QPair<QString, QString>>> m_enums;
     inline static Controller *s_instance = nullptr; // NOLINT(readability-identifier-naming)
 };
 
