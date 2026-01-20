@@ -102,11 +102,7 @@ void Row::clear() {
 }
 
 auto Row::toItemList() -> QList<Item *> {
-    auto list = QList<Item *>();
-    for (auto *item : m_items) {
-        list.append(item);
-    }
-    return list;
+    return m_items;
 }
 
 auto Row::merge(const QList<Item *> &items) -> Row * {
