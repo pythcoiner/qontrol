@@ -22,6 +22,12 @@ namespace qontrol::widgets {
 SliderHeader::SliderHeader(Slider *parent) : QWidget(parent) {
     m_pen = new QPen(Qt::white);
     m_parent = parent;
+    m_labels = new QMap<int, QPair<QRect, QString>>();
+}
+
+SliderHeader::~SliderHeader() {
+    delete m_pen;
+    delete m_labels;
 }
 
 void SliderHeader::setPen(QPen *pen) {
@@ -78,7 +84,7 @@ void SliderHeader::paintEvent(QPaintEvent *ev) {
     auto tickRange = map->lastKey() - tickStart;
     // NOTE: it should be safer to call parent.load() but can be ressource intensive
 
-    auto *labels = new QMap<int, QPair<QRect, QString>>();
+    m_labels->clear();
     for (const auto c_tick : *map) {
         auto label = QString::number(c_tick);
         auto tickPosition =
@@ -91,12 +97,12 @@ void SliderHeader::paintEvent(QPaintEvent *ev) {
         int y((this->height() - position.height()) / 2);
         position.moveTo(x, y);
 
-        labels->insert(x, QPair<QRect, QString>(position, label));
+        m_labels->insert(x, QPair<QRect, QString>(position, label));
     }
 
-    filter(labels);
+    filter(m_labels);
 
-    for (const auto &pair : *labels) {
+    for (const auto &pair : *m_labels) {
         painter.drawText(pair.first, pair.second);
     }
 }
@@ -354,6 +360,11 @@ void Slider::updateMinMax() {
 
 auto Slider::slider() -> QSlider * {
     return m_slider;
+}
+
+Slider::~Slider() {
+    delete m_ticks;
+    delete m_pen;
 }
 
 } // namespace qontrol::widgets

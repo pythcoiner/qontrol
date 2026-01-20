@@ -25,6 +25,7 @@ class SliderHeader : public QWidget {
 
 public:
     explicit SliderHeader(Slider *parent);
+    ~SliderHeader() override;
     void addLabel(int tick_position, QString label);
     void clear();
     void setPen(QPen *pen);
@@ -37,6 +38,7 @@ protected:
 private:
     Slider *m_parent;
     QPen *m_pen;
+    QMap<int, QPair<QRect, QString>> *m_labels;
 };
 
 class Slider : public Row, Widget {
@@ -44,6 +46,8 @@ class Slider : public Row, Widget {
 
 public:
     explicit Slider(int padding = 20, QWidget *parent = nullptr);
+    ~Slider() override;
+
 
     static auto percent(const QString &label, int label_width, QWidget *parent = nullptr, int *travel_allowed = nullptr)
         -> Slider *;
