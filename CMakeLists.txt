@@ -60,3 +60,8 @@ set_target_properties(${LIB_QONTROL_QONTROL} PROPERTIES
 )
 
 add_subdirectory(tests)
+
+option(BUILD_EXAMPLES "Build example applications" OFF)
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()

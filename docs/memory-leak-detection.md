@@ -12,10 +12,14 @@ QT_QPA_PLATFORM=offscreen ./build/tests/test_parent_child
 
 ## Build Options
 
-| Option | Description |
-|--------|-------------|
-| `ENABLE_ASAN` | AddressSanitizer - comprehensive memory error detection (recommended) |
-| `ENABLE_LSAN` | LeakSanitizer only - lightweight leak detection |
+```
++--------------+-------------------------------------------------------------+
+| Option       | Description                                                 |
++--------------+-------------------------------------------------------------+
+| ENABLE_ASAN  | AddressSanitizer - comprehensive memory error detection     |
+| ENABLE_LSAN  | LeakSanitizer only - lightweight leak detection             |
++--------------+-------------------------------------------------------------+
+```
 
 ## AddressSanitizer
 
@@ -46,12 +50,16 @@ ASAN_OPTIONS=detect_leaks=1:print_stats=1 QT_QPA_PLATFORM=offscreen ./build/test
 
 ### Environment Variables
 
-| Variable | Example | Description |
-|----------|---------|-------------|
-| `ASAN_OPTIONS` | `detect_leaks=1` | Enable leak detection |
-| `ASAN_OPTIONS` | `print_stats=1` | Print memory statistics |
-| `ASAN_OPTIONS` | `abort_on_error=1` | Abort on first error (for debugging) |
-| `ASAN_OPTIONS` | `log_path=/tmp/asan.log` | Write report to file |
+```
++--------------+------------------------+----------------------------------------+
+| Variable     | Example                | Description                            |
++--------------+------------------------+----------------------------------------+
+| ASAN_OPTIONS | detect_leaks=1         | Enable leak detection                  |
+| ASAN_OPTIONS | print_stats=1          | Print memory statistics                |
+| ASAN_OPTIONS | abort_on_error=1       | Abort on first error (for debugging)   |
+| ASAN_OPTIONS | log_path=/tmp/asan.log | Write report to file                   |
++--------------+------------------------+----------------------------------------+
+```
 
 Multiple options can be combined with colons:
 ```bash
@@ -95,12 +103,16 @@ LSAN_OPTIONS=suppressions=lsan.supp ./your_app
 
 ## Interpreting Results
 
-| Type | Description | Action |
-|------|-------------|--------|
-| **Definite leak** | Memory allocated, never freed, unreachable | Fix required |
-| **Indirect leak** | Reachable only through a definite leak | Fix the definite leak |
-| **Possible leak** | Ambiguous (interior pointers, complex structures) | Investigate |
-| **Still reachable** | Accessible at exit (singletons, caches) | Usually acceptable |
+```
++------------------+----------------------------------------------+----------------------+
+| Type             | Description                                  | Action               |
++------------------+----------------------------------------------+----------------------+
+| Definite leak    | Memory allocated, never freed, unreachable   | Fix required         |
+| Indirect leak    | Reachable only through a definite leak       | Fix the definite leak|
+| Possible leak    | Ambiguous (interior pointers, complex structs)| Investigate         |
+| Still reachable  | Accessible at exit (singletons, caches)      | Usually acceptable   |
++------------------+----------------------------------------------+----------------------+
+```
 
 ### Example Output
 
@@ -119,11 +131,15 @@ SUMMARY: AddressSanitizer: 64 byte(s) leaked in 1 allocation(s).
 
 The framework uses Qt's parent-child ownership model:
 
-| Pattern | Ownership | Cleanup |
-|---------|-----------|---------|
-| `push(widget)` | Parent set via `setParent(this)` | Automatic (Qt) |
-| `new Widget(parent)` | Explicit parent | Automatic (Qt) |
-| `new QMap<K,V>` | No parent (non-QObject) | Manual `delete` in destructor |
+```
++----------------------+-------------------------------+-------------------------+
+| Pattern              | Ownership                     | Cleanup                 |
++----------------------+-------------------------------+-------------------------+
+| push(widget)         | Parent set via setParent(this)| Automatic (Qt)          |
+| new Widget(parent)   | Explicit parent               | Automatic (Qt)          |
+| new QMap<K,V>        | No parent (non-QObject)       | Manual delete in dtor   |
++----------------------+-------------------------------+-------------------------+
+```
 
 ### Examples
 
