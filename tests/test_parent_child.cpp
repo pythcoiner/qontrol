@@ -276,6 +276,7 @@ private slots:
 
     void testColumnClearDeletesWidgets() {
         // Test: Calling clear() on Column should delete its widgets
+        // (destruction is deferred via deleteLater, so we process events)
         resetDestroyedFlag();
         auto *widget = new QLabel("to be cleared");
         connect(widget, &QObject::destroyed, this, &TestParentChild::markDestroyed);
@@ -283,6 +284,7 @@ private slots:
         auto *column = new Column();
         column->push(widget);
         column->clear();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
 
         QVERIFY2(m_widgetDestroyed, "FAIL: Widget was NOT deleted when Column::clear() was called");
 
@@ -291,6 +293,7 @@ private slots:
 
     void testRowClearDeletesWidgets() {
         // Test: Calling clear() on Row should delete its widgets
+        // (destruction is deferred via deleteLater, so we process events)
         resetDestroyedFlag();
         auto *widget = new QLabel("to be cleared");
         connect(widget, &QObject::destroyed, this, &TestParentChild::markDestroyed);
@@ -298,6 +301,7 @@ private slots:
         auto *row = new Row();
         row->push(widget);
         row->clear();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
 
         QVERIFY2(m_widgetDestroyed, "FAIL: Widget was NOT deleted when Row::clear() was called");
 
@@ -314,6 +318,7 @@ private slots:
         auto *column = new Column();
         column->push(widget1);
         column->clear();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
         column->push(widget2);
 
         delete column;
@@ -332,6 +337,7 @@ private slots:
         auto *row = new Row();
         row->push(widget1);
         row->clear();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
         row->push(widget2);
 
         delete row;
@@ -434,6 +440,132 @@ private slots:
         QVERIFY2(destroyedCount == 3,
             QString("FAIL: Only %1/3 widgets were deleted when Row was deleted")
                 .arg(destroyedCount).toUtf8().constData());
+    }
+
+    // === CLEAR DURING SIGNAL EMISSION TESTS ===
+    //
+    // Bug: Column::clear() and Row::clear() use `delete item->widget()`.
+    // This is undefined behavior when called during signal emission from a
+    // descendant widget — you're destroying an object whose method is still
+    // on the call stack.
+    //
+    // Fix: use deleteLater() which defers destruction until control returns
+    // to the event loop.
+    //
+    // These tests verify the safe (deleteLater) behavior:
+    //  - During the signal handler: widget is scheduled for deletion but
+    //    still alive (safe to access from Qt's signal machinery).
+    //  - After processing deferred deletes: widget is actually destroyed.
+
+    void testColumnClearDuringSignalDefersDestruction() {
+        // A button inside a Row inside a Column. The button's clicked signal
+        // calls Column::clear(). With deleteLater, the Row should still
+        // exist during signal emission and be destroyed only after the
+        // event loop processes DeferredDelete events.
+
+        QPointer<Row> rowGuard;
+        QPointer<QPushButton> buttonGuard;
+        bool rowAliveDuringSignal = false;
+        bool buttonAliveDuringSignal = false;
+
+        auto *column = new Column();
+        auto *row = new Row();
+        auto *button = new QPushButton("click me");
+
+        rowGuard = row;
+        buttonGuard = button;
+
+        row->push(button);
+        column->push(row);
+
+        connect(button, &QPushButton::clicked, column, [&, column]() {
+            column->clear();
+            // With deleteLater: widgets are still alive here (deferred).
+            // With delete: widgets are already destroyed (UB — the button
+            // whose signal we're in has been deleted out from under us).
+            rowAliveDuringSignal = !rowGuard.isNull();
+            buttonAliveDuringSignal = !buttonGuard.isNull();
+        });
+
+        emit button->clicked();
+
+        // Verify widgets survived the signal handler (deleteLater defers)
+        QVERIFY2(rowAliveDuringSignal,
+            "FAIL: Row was destroyed during signal emission — "
+            "clear() should use deleteLater() to defer destruction");
+        QVERIFY2(buttonAliveDuringSignal,
+            "FAIL: Button was destroyed during signal emission — "
+            "clear() should use deleteLater() to defer destruction");
+
+        // Now process deferred deletes — widgets should be destroyed
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+
+        QVERIFY2(rowGuard.isNull(),
+            "FAIL: Row was NOT destroyed after processing deferred deletes");
+        QVERIFY2(buttonGuard.isNull(),
+            "FAIL: Button was NOT destroyed after processing deferred deletes");
+
+        delete column;
+    }
+
+    void testRowClearDuringSignalDefersDestruction() {
+        // Same scenario for Row::clear(): a button inside a Row. The
+        // button's clicked signal calls Row::clear().
+
+        QPointer<QPushButton> buttonGuard;
+        bool buttonAliveDuringSignal = false;
+
+        auto *row = new Row();
+        auto *button = new QPushButton("click me");
+
+        buttonGuard = button;
+
+        row->push(button);
+
+        connect(button, &QPushButton::clicked, row, [&, row]() {
+            row->clear();
+            buttonAliveDuringSignal = !buttonGuard.isNull();
+        });
+
+        emit button->clicked();
+
+        QVERIFY2(buttonAliveDuringSignal,
+            "FAIL: Button was destroyed during signal emission — "
+            "clear() should use deleteLater() to defer destruction");
+
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+
+        QVERIFY2(buttonGuard.isNull(),
+            "FAIL: Button was NOT destroyed after processing deferred deletes");
+
+        delete row;
+    }
+
+    void testColumnClearDuringSignalChildCount() {
+        // After clear() during signal emission and processing deferred
+        // deletes, the Column should have no child widgets remaining.
+
+        auto *column = new Column();
+        auto *row = new Row();
+        auto *button = new QPushButton("click me");
+
+        row->push(button);
+        column->push(row);
+
+        connect(button, &QPushButton::clicked, column, [column]() {
+            column->clear();
+        });
+
+        emit button->clicked();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+
+        auto children = column->findChildren<QWidget *>(Qt::FindDirectChildrenOnly);
+        QVERIFY2(children.size() == 0,
+            QString("FAIL: Column still has %1 children after clear() during "
+                    "signal emission (expected 0)")
+                .arg(children.size()).toUtf8().constData());
+
+        delete column;
     }
 
     // === VERIFY PARENT IS SET CORRECTLY ===

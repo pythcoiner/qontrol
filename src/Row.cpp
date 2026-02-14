@@ -92,7 +92,7 @@ void Row::clear() {
     // the widgets. We must delete them explicitly here.
     for (auto *item : m_items) {
         if (item->isWidget()) {
-            delete item->widget();
+            item->widget()->deleteLater();
         }
         delete item;
     }
