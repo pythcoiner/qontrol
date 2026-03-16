@@ -53,10 +53,7 @@ void ToggleSwitch::paintEvent(QPaintEvent *event) {
 }
 
 void ToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
-    if (event->button() & (Qt::LeftButton != 0U)) // NOLINT
-    {
-        this->setChecked(!this->isChecked());
-    }
+    QAbstractButton::mouseReleaseEvent(event);
 }
 
 void ToggleSwitch::resizeEvent(QResizeEvent *e) {
