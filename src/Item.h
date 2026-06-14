@@ -29,15 +29,22 @@ private:
 class Item {
 public:
     explicit Item(QWidget *widget);
+    Item(QWidget *widget, int stretch, Qt::Alignment alignment);
     explicit Item(Orientation orient, std::optional<int> value);
 
     [[nodiscard]] auto isWidget() const -> bool;
     [[nodiscard]] auto isSpacer() const -> bool;
 
     auto widget() -> QWidget *;
+    // Stretch factor and alignment recorded for a widget item, so merge() /
+    // toItemList() rebuilds reproduce it exactly.
+    [[nodiscard]] auto stretch() const -> int;
+    [[nodiscard]] auto alignment() const -> Qt::Alignment;
     auto spacer() -> std::optional<Spacer>;
 
 private:
     std::optional<QWidget *> m_widget = std::nullopt;
+    int m_stretch = 0;
+    Qt::Alignment m_alignment = Qt::Alignment();
     std::optional<Spacer> m_spacer = std::nullopt;
 };

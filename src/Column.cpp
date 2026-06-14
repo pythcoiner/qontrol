@@ -30,6 +30,17 @@ auto Column::push(QWidget *widget) -> Column * {
     return this;
 }
 
+auto Column::push(QWidget *widget, int stretch, Qt::Alignment alignment) -> Column * {
+    widget->setParent(this);
+    this->layout()->addWidget(widget, stretch, alignment);
+    m_items.append(new Item(widget, stretch, alignment));
+    return this;
+}
+
+auto Column::pushAligned(QWidget *widget, Qt::Alignment alignment) -> Column * {
+    return push(widget, 0, alignment);
+}
+
 auto Column::push(std::optional<QWidget *> opt_widget) -> Column * {
     if (opt_widget.has_value()) {
         this->push(opt_widget.value());
@@ -45,6 +56,44 @@ auto Column::push(QLayout *layout) -> Column * {
             widget->setParent(this);
         }
     }
+    return this;
+}
+
+auto Column::push(QLayout *layout, int stretch) -> Column * {
+    this->layout()->addLayout(layout, stretch);
+    for (int i = 0; i < layout->count(); ++i) {
+        if (auto *widget = layout->itemAt(i)->widget()) {
+            widget->setParent(this);
+        }
+    }
+    return this;
+}
+
+auto Column::align(QWidget *widget, Qt::Alignment alignment) -> Column * {
+    this->layout()->setAlignment(widget, alignment);
+    return this;
+}
+
+auto Column::spacing(int px) -> Column * {
+    this->layout()->setSpacing(px);
+    return this;
+}
+
+auto Column::margins(int px) -> Column * {
+    this->layout()->setContentsMargins(px, px, px, px);
+    return this;
+}
+
+auto Column::margins(int left, int top, int right, int bottom) -> Column * {
+    this->layout()->setContentsMargins(left, top, right, bottom);
+    return this;
+}
+
+auto Column::into(QWidget *target) -> Column * {
+    auto *host = new QVBoxLayout(target);
+    host->setContentsMargins(0, 0, 0, 0);
+    host->setSpacing(0);
+    host->addWidget(this);
     return this;
 }
 
@@ -88,7 +137,7 @@ auto Column::layout() -> QVBoxLayout * {
 auto Column::merge(const QList<Item *> &items) -> Column * {
     for (auto *item : items) {
         if (item->isWidget()) {
-            push(item->widget());
+            push(item->widget(), item->stretch(), item->alignment());
         } else if (item->isSpacer()) {
             if (item->spacer()->orientation() == Orientation::Vertical) {
                 auto value = item->spacer().value().value();

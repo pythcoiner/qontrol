@@ -5,6 +5,20 @@ Item::Item(QWidget *widget) {
     m_widget = std::make_optional(widget);
 }
 
+Item::Item(QWidget *widget, int stretch, Qt::Alignment alignment) {
+    m_widget = std::make_optional(widget);
+    m_stretch = stretch;
+    m_alignment = alignment;
+}
+
+auto Item::stretch() const -> int {
+    return m_stretch;
+}
+
+auto Item::alignment() const -> Qt::Alignment {
+    return m_alignment;
+}
+
 auto Item::isWidget() const -> bool {
     return m_widget.has_value();
 }

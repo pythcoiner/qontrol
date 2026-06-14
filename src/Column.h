@@ -18,8 +18,27 @@ public:
     auto layout() -> QVBoxLayout *;
     auto push(QWidgetItem *item) -> Column *;
     auto push(QWidget *widget) -> Column *;
+    // Push a widget with a stretch factor and optional cross-axis alignment
+    // (e.g. Qt::AlignHCenter / AlignRight). To align without a stretch, pass
+    // stretch 0 or use pushAligned().
+    auto push(QWidget *widget, int stretch, Qt::Alignment alignment = Qt::Alignment()) -> Column *;
+    // Push a widget aligned on the cross axis (stretch 0). Avoids the
+    // int-vs-Qt::Alignment overload ambiguity of a two-argument push.
+    auto pushAligned(QWidget *widget, Qt::Alignment alignment) -> Column *;
     auto push(std::optional<QWidget *> opt_widget) -> Column *;
     auto push(QLayout *layout) -> Column *;
+    auto push(QLayout *layout, int stretch) -> Column *;
+    // Set the alignment of an already-pushed widget.
+    auto align(QWidget *widget, Qt::Alignment alignment) -> Column *;
+    // Fluent layout spacing. Unlike pushSpacer(), layout spacing collapses
+    // around hidden widgets, so prefer it for inter-item gaps that should
+    // disappear when a neighbor is hidden.
+    auto spacing(int px) -> Column *;
+    auto margins(int px) -> Column *;
+    auto margins(int left, int top, int right, int bottom) -> Column *;
+    // Host this Column inside `target` (sets target's layout). Lets a plain
+    // QWidget use the fluent builder without a bare layout in consumer code.
+    auto into(QWidget *target) -> Column *;
     auto widget() -> QWidget *;
     auto pushSpacer() -> Column *;
     auto pushSpacer(int height) -> Column *;
