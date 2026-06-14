@@ -118,6 +118,70 @@ auto Column::pushStretch(int factor) -> Column * {
     return this;
 }
 
+auto Column::insert(int index, QWidget *widget, int stretch, Qt::Alignment alignment) -> Column * {
+    widget->setParent(this);
+    this->layout()->insertWidget(index, widget, stretch, alignment);
+    const int at = qBound(0, index, static_cast<int>(m_items.size()));
+    m_items.insert(at, new Item(widget, stretch, alignment));
+    return this;
+}
+
+auto Column::insertSpacer(int index) -> Column * {
+    this->layout()->insertStretch(index);
+    const int at = qBound(0, index, static_cast<int>(m_items.size()));
+    m_items.insert(at, new Item(Orientation::Vertical, std::nullopt));
+    return this;
+}
+
+auto Column::insertSpacer(int index, int height) -> Column * {
+    this->layout()->insertSpacing(index, height);
+    const int at = qBound(0, index, static_cast<int>(m_items.size()));
+    m_items.insert(at, new Item(Orientation::Vertical, height));
+    return this;
+}
+
+auto Column::take(QWidget *widget) -> QWidget * {
+    if (widget == nullptr) {
+        return nullptr;
+    }
+    this->layout()->removeWidget(widget);
+    widget->setParent(nullptr);
+    for (int i = 0; i < m_items.size(); ++i) {
+        if (m_items[i]->isWidget() && m_items[i]->widget() == widget) {
+            delete m_items[i];
+            m_items.removeAt(i);
+            break;
+        }
+    }
+    return widget;
+}
+
+auto Column::remove(QWidget *widget) -> Column * {
+    if (take(widget) != nullptr) {
+        widget->deleteLater();
+    }
+    return this;
+}
+
+auto Column::replace(QWidget *old_widget, QWidget *new_widget) -> Column * {
+    const int index = this->layout()->indexOf(old_widget);
+    if (index < 0) {
+        return this;
+    }
+    int stretch = 0;
+    Qt::Alignment alignment;
+    for (auto *item : m_items) {
+        if (item->isWidget() && item->widget() == old_widget) {
+            stretch = item->stretch();
+            alignment = item->alignment();
+            break;
+        }
+    }
+    insert(index, new_widget, stretch, alignment);
+    remove(old_widget);
+    return this;
+}
+
 // NOTE:we need to override this method in order to impeach consumer to change layout type
 void Column::setLayout(QLayout *layout) { // NOLINT
     qCritical() << "Layout of a Column cannot be changed";
