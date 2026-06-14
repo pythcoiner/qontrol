@@ -43,6 +43,16 @@ public:
     auto pushSpacer() -> Row *;
     auto pushSpacer(int width) -> Row *;
     auto pushStretch(int factor) -> Row *;
+    // Positional insert.
+    auto insert(int index, QWidget *widget, int stretch = 0,
+                Qt::Alignment alignment = Qt::Alignment()) -> Row *;
+    auto insertSpacer(int index) -> Row *;
+    auto insertSpacer(int index, int width) -> Row *;
+    // Remove a widget: remove() deletes it (deleteLater); take() detaches and
+    // returns it without deleting; replace() swaps it preserving stretch/alignment.
+    auto remove(QWidget *widget) -> Row *;
+    auto take(QWidget *widget) -> QWidget *;
+    auto replace(QWidget *old_widget, QWidget *new_widget) -> Row *;
     auto merge(const QList<Item *> &items) -> Row *;
     auto merge(Column *column) -> Row *;
     auto merge(Row *row) -> Row *;

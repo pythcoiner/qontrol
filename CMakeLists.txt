@@ -40,6 +40,7 @@ set(SOURCES
     src/Item.cpp
     src/Row.cpp
     src/Column.cpp
+    src/Grid.cpp
     src/Panel.cpp
     src/Modal.cpp
     src/Screen.cpp
